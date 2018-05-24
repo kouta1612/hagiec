@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'address_city' => $data['address_city'],
             'address_street' => $data['address_street'],
             'address_building' => $data['address_building'],
-            'postalCode' => $data['postalCode']
+            'postal_code' => $data['postal_code']
         ]);
     }
 }

@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'UsersController@index');
+// Route::get('/', 'UsersController@index');
 Route::get('/top', 'ProductsController@show');
 Route::get('/detail', 'ProductsController@detail');
 

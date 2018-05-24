@@ -87,7 +87,7 @@
                             <label for="state" class="col-md-4 control-label">Address(State)</label>
 
                             <div class="col-md-6">
-                                <input id="state" type="text" class="form-control" name="state" value="{{ old('state') }}" required>
+                                <input id="state" type="text" class="form-control" name="address_state" value="{{ old('state') }}" required>
 
                                 @if ($errors->has('state'))
                                     <span class="help-block">
@@ -100,7 +100,7 @@
                             <label for="city" class="col-md-4 control-label">Address(City)</label>
 
                             <div class="col-md-6">
-                                <input id="city" type="text" class="form-control" name="city" value="{{ old('city') }}" required>
+                                <input id="city" type="text" class="form-control" name="address_city" value="{{ old('city') }}" required>
 
                                 @if ($errors->has('city'))
                                     <span class="help-block">
@@ -113,7 +113,7 @@
                             <label for="street" class="col-md-4 control-label">Address(Street)</label>
 
                             <div class="col-md-6">
-                                <input id="street" type="text" class="form-control" name="street" value="{{ old('street') }}" required>
+                                <input id="street" type="text" class="form-control" name="address_street" value="{{ old('street') }}" required>
 
                                 @if ($errors->has('street'))
                                     <span class="help-block">
@@ -126,7 +126,7 @@
                             <label for="building" class="col-md-4 control-label">Address(Building)</label>
 
                             <div class="col-md-6">
-                                <input id="building" type="text" class="form-control" name="building" value="{{ old('building') }}" required>
+                                <input id="building" type="text" class="form-control" name="address_building" value="{{ old('building') }}" required>
 
                                 @if ($errors->has('building'))
                                     <span class="help-block">

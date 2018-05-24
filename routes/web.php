@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', 'UsersController@index');
+// Route::get('/', 'UsersController@index');
 Route::get('/top', 'ProductsController@show');
+Route::get('/detail', 'ProductsController@detail');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/test', 'TestController@test');

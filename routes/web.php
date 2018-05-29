@@ -11,12 +11,12 @@
 |
 */
 
-// Route::get('/', 'UsersController@index');
-Route::get('/top', 'ProductsController@show');
-Route::get('/detail', 'ProductsController@detail');
-
 Auth::routes();
-
+Route::redirect('/', '/login', 301);
+// Route::get('/logout', 'ProductsController@logout');
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/test', 'TestController@test');
-Route::view('/item_list', 'item_list');
+Route::get('/top', 'ProductsController@top');
+Route::get('/detail/{id}', 'ProductsController@detail');
+Route::get('/cart', 'ProductsController@cart');
+Route::get('/confirm', 'ProductsController@confirm');
+Route::get('/done_payment', 'ProductsController@done_payment');

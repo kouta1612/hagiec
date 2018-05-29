@@ -1,8 +1,19 @@
-
-#form-length {
-  width: 400px;
-}
-
 #logo {
   font-size: 30px;
+}
+/* .item_image {
+  max-height: 200px;
+  width: auto;
+} */
+.cart_side {
+  height: 135px;
+}
+.top_card {
+  height: 370px;
+}
+.contain {
+  object-fit: contain;
+  width: 200px;
+  height: 200px;
+  background-color: white;
 }

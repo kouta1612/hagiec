@@ -14,7 +14,8 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
           'name' => "田中太郎",
           'email' => "tanaka@gmail.com",
-          'password' => "root",
+          // aaaaaa->$2y$10$augAInCcy1aL.p1GuqsIQ..RjL/aohjYHLtN5JvBvWIQD0wQ2727i
+          'password' => "$2y$10$augAInCcy1aL.p1GuqsIQ..RjL/aohjYHLtN5JvBvWIQD0wQ2727i",
           'tel' => "03-3241-1432",
           'address_state' => "東京都",
           'address_city' => "渋谷区",
@@ -25,7 +26,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
           'name' => "John",
           'email' => "john@gmail.com",
-          'password' => "root",
+          'password' => "$2y$10$augAInCcy1aL.p1GuqsIQ..RjL/aohjYHLtN5JvBvWIQD0wQ2727i",
           'tel' => "03-5467-4563",
           'address_state' => "アメリカ",
           'address_city' => "カリフォルニア",
@@ -36,7 +37,7 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
           'name' => "ハリー",
           'email' => "herry@gmail.com",
-          'password' => "root",
+          'password' => "$2y$10$augAInCcy1aL.p1GuqsIQ..RjL/aohjYHLtN5JvBvWIQD0wQ2727i",
           'tel' => "03-5467-4563",
           'address_state' => "アメリカ",
           'address_city' => "カリフォルニア",

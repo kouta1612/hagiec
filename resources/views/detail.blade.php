@@ -28,7 +28,7 @@
             @endfor
           </select>
         </p>
-        <button type="button" name="button">カートに追加</button>
+        <button class="btn btn-primary" type="button" name="button">カートに追加</button>
       </form>
     </div>
   </div>

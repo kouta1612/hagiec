@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    // private $user_id;
+    //
+    // public function __get(User $user)
+
+    public function carts() {
+      $carts = Cart::where('user_id', $this->id)->get();
+      return $carts;
+    }
+
 }

@@ -15,7 +15,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <a href="item_list" class="btn btn-primary">トップに戻る</a>
+      <a href="/top" class="btn btn-primary">トップに戻る</a>
     </div>
   </div>
 </div>

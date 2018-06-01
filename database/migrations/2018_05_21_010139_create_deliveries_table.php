@@ -14,7 +14,7 @@ class CreateDeliveriesTable extends Migration
     public function up()
     {
         Schema::create('deliveries', function (Blueprint $table) {
-            $table->unsignedInteger('id');
+            $table->increments('id');
             $table->string('name');
             $table->string('address_state');
             $table->string('address_city');
@@ -23,7 +23,7 @@ class CreateDeliveriesTable extends Migration
             $table->timestamps();
 
 
-            $table->primary('id');
+            // $table->primary('id');
 
             // $table->foreign('id')
             //        ->references('delivery_to_id')

@@ -19,10 +19,10 @@ class CreatePaymentsTable extends Migration
             $table->string('payment_method');
             $table->timestamps();
 
-            $table->foreign('user_id')
-                   ->references('id')
-                   ->on('users')
-                   ->onDelete('cascade');
+            // $table->foreign('user_id')
+            //        ->references('id')
+            //        ->on('users')
+            //        ->onDelete('cascade');
         });
     }
 

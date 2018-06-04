@@ -8,27 +8,30 @@
   <div class="row">
     <div class="col-3">
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{$item_id->image_url}}" alt="Card image cap">
+        <img class="card-img-top" src="{{$item->image_url}}" alt="Card image cap">
       </div>
     </div>
     <div class="col-4 offset-1">
-      <h3 class="mb-3 pt-3">{{$item_id->name}}</h3>
-      <p>カテゴリ：{{$item_id->category}}</p>
-      <p>原産国：{{$item_id->country}}</p>
-      <p>商品説明：<br>{{$item_id->description}}</p>
+      <h3 class="mb-3 pt-3">{{$item->name}}</h3>
+      <p>カテゴリ：{{$item->category}}</p>
+      <p>原産国：{{$item->country}}</p>
+      <p>商品説明：<br>{{$item->description}}</p>
     </div>
     <div class="col-3 offset-1 pt-3">
-      <p>価格 ¥{{$item_id->price}}</p>
-      <form action="" method="post">
-        <p>
+      <h3 class="mb-5">¥{{$item->price}}</h3>
+      <form class="form-group" action="/detail" method="post">
+        {{ csrf_field() }}
+        {{--<p>
           <label for="number">数量</label>
           <select class="form-control" name="number">
-            @for($i = 0; $i < $item_id->stock_number; $i++)
+            @for($i = 0; $i < $item->stock_number; $i++)
               <option value="{{$i + 1}}">{{$i + 1}}</option>
             @endfor
           </select>
-        </p>
-        <button class="btn btn-primary" type="button" name="button">カートに追加</button>
+        </p>--}}
+        <input type="hidden" name="user_id" value="{{$user_id}}">
+        <input type="hidden" name="item_id" value="{{$item->id}}">
+        <button class="btn btn-primary" type="submit">カートに追加</button>
       </form>
     </div>
   </div>

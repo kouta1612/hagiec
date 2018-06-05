@@ -101,8 +101,10 @@ class ItemsController extends Controller
       return redirect()->to("cart/{$user_id}");
     }
 
-    public function confirm() {
-      return view('confirm');
+    public function confirm($user_id, Request $request) {
+      $totalQuantity = $request->totalQuantity;
+      $totalPrice = $request->totalPrice;
+      return view('confirm')->with(['user_id'=>$user_id, 'totalQuantity'=>$totalQuantity, 'totalPrice'=>$totalPrice]);
     }
 
     public function done_payment() {

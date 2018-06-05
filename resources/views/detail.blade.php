@@ -21,14 +21,6 @@
       <h3 class="mb-5">¥{{$item->price}}</h3>
       <form class="form-group" action="/detail" method="post">
         {{ csrf_field() }}
-        {{--<p>
-          <label for="number">数量</label>
-          <select class="form-control" name="number">
-            @for($i = 0; $i < $item->stock_number; $i++)
-              <option value="{{$i + 1}}">{{$i + 1}}</option>
-            @endfor
-          </select>
-        </p>--}}
         <input type="hidden" name="user_id" value="{{$user_id}}">
         <input type="hidden" name="item_id" value="{{$item->id}}">
         <button class="btn btn-primary" type="submit">カートに追加</button>

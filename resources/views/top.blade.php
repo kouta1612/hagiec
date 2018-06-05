@@ -30,7 +30,7 @@
               <p class="card-text">¥{{$item->price}}</p>
               <form class="form-group" action="/cart" method="post">
                 {{ csrf_field() }}
-                <!-- <a href="/detail/{{$item->id}}" class="btn btn-primary">詳細</a> -->
+                <a href="/detail/{{$item->id}}" class="btn btn-primary">詳細</a>
                 <input type="hidden" name="user_id" value="{{$user_id}}">
                 <input type="hidden" name="item_id" value="{{$item->id}}">
                 <button class="btn btn-primary" type="submit">カートに追加</button>

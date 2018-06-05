@@ -9,10 +9,10 @@
       <h3>カート</h3>
     </div>
   </div>
-  <div class="row">
+  <div class="row" id="cartItems">
     <div class="col-8">
       @foreach($user->carts() as $cart)
-        <div class="row border-top border-muted py-3 mb-3">
+        <div class="row border-top border-muted py-3 mb-3 cartItem">
           <div class="col-2 d-flex align-items-center">
             <div class="card">
                 <img class="card-img-top" src="{{$cart->item()->image_url}}" alt="Card image cap">
@@ -28,7 +28,7 @@
             </form>
           </div>
           <div class="col-3">
-            <h3>¥{{$cart->item()->price}}</h3>
+            <h3>¥<span class="itemPrice">{{$cart->item()->price}}</span></h3>
           </div>
           <div class="col-2">
             <select class="form-control" name="number">
@@ -47,12 +47,17 @@
     <div class="offset-1 col-3 border border-muted pt-4 bg-light cart_side">
       <div class="row mb-3">
         <div class="col">
-          <h5>小計（o点）：¥ooo,ooo</h5>
+          <h5>小計（<span class="totalQuantity">0</span>点）：¥<span class="totalPrice">0</span></h5>
         </div>
       </div>
       <div class="row">
         <div class="col text-center">
-          <button type="submit" class="btn btn-primary">レジに進む</button>
+          <form class="form-group" action="/confirm/{$user->id}" method="get">
+            {{ csrf_field() }}
+            <input type="hidden" name="totalQuantity">
+            <input type="hidden" name="totalPrice">
+            <button type="submit" class="btn btn-primary">レジに進む</button>
+          </form>
         </div>
       </div>
     </div>
@@ -62,6 +67,36 @@
 
 @section('ajax')
 <script>
-
+  // ページ起動時の値
+  $(function() {
+    $totalQuantity = 0;
+    $totalPrice = 0;
+    $('#cartItems').find('.cartItem').each(function() {
+      $quantity = parseInt($(this).find('select').val());
+      $price = parseInt($(this).find('.itemPrice').text());
+      $totalQuantity += $quantity;
+      $totalPrice += $quantity * $price;
+    });
+    $('.totalQuantity').text($totalQuantity);
+    $('.totalPrice').text($totalPrice);
+    $('input[name="totalQuantity"]').val($totalQuantity);
+    $('input[name="totalPrice"]').val($totalPrice);
+  });
+  // カート内商品数変更時の値
+  $('#cartItems select').change(function() {
+    $totalQuantity = 0;
+    $totalPrice = 0;
+    $('#cartItems').find('.cartItem').each(function() {
+      {{--console.log($(this).find('.itemPrice').text());--}}
+      $quantity = parseInt($(this).find('select').val());
+      $price = parseInt($(this).find('.itemPrice').text());
+      $totalQuantity += $quantity;
+      $totalPrice += $quantity * $price;
+    });
+    $('.totalQuantity').text($totalQuantity);
+    $('.totalPrice').text($totalPrice);
+    $('input[name="totalQuantity"]').val($totalQuantity);
+    $('input[name="totalPrice"]').val($totalPrice);
+  });
 </script>
 @endsection

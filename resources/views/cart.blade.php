@@ -65,7 +65,7 @@
 </div>
 @endsection
 
-@section('ajax')
+@section('jQuery')
 <script>
   // ページ起動時の値
   $(function() {

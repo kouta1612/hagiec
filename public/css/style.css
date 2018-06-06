@@ -13,3 +13,8 @@
   height: 200px;
   background-color: white;
 }
+.address-body > ul {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+}

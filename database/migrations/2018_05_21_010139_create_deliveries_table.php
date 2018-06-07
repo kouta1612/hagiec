@@ -15,11 +15,14 @@ class CreateDeliveriesTable extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('user_id');
             $table->string('name');
-            $table->string('address_state');
-            $table->string('address_city');
-            $table->string('address_street');
-            $table->string('address_building');
+            $table->string('postal_code');
+            $table->string('state');
+            $table->string('city');
+            $table->string('street');
+            $table->string('building');
+            $table->string('tel');
             $table->timestamps();
 
 

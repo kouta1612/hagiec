@@ -36,4 +36,9 @@ class User extends Authenticatable
       return $carts;
     }
 
+    public function addresses() {
+      $addresses = Delivery::where('user_id', $this->id)->get();
+      return $addresses;
+    }
+
 }

@@ -22,4 +22,6 @@ Route::get('/cart/{user_id}', 'ItemsController@showCart');
 Route::post('/cart', 'ItemsController@cart');
 Route::delete('/destroy/{item_id}','ItemsController@destroy');
 Route::get('/confirm/{user_id}', 'ItemsController@confirm');
+Route::get('/address', 'ItemsController@address');
+Route::post('/address', 'ItemsController@post_address');
 Route::get('/done_payment', 'ItemsController@done_payment');

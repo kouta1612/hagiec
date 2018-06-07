@@ -8,7 +8,9 @@
     <button type="button" class="btn btn-primary mb-5 mx-auto">注文確定</button>
   </div>
   <div class="row border border-muted mb-3 mx-auto p-3">
+    {{--お届け先住所--}}
     <div class="col-4">
+      {{--確認画面でのお届け先住所--}}
       <div class="address-header">
         <strong>お届け先住所</strong>
         <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">変更</a>
@@ -24,34 +26,53 @@
               </div>
               <div class="modal-body">
                 <div class="container-fluid">
-                @foreach($user->addresses() as $address)
-                @if($loop->index % 3 == 0)
-                  <div class="row">
-                @endif
+                  <div class="row mb-3">
                     <div class="col-4">
                       <div class="address-body">
                         <ul>
-                          <li class="mb-1"><strong>{{$address->name}}</strong></li>
-                          <li>〒{{$address->postal_code}}</li>
-                          <li>{{$address->state}} {{$address->city}}{{$address->street}}</li>
-                          <li>{{$address->building}}</li>
-                          <li>電話番号: {{$address->tel}}</li>
+                          <li class="mb-1"><strong>萩原孔太</strong></li>
+                          <li>111-1111</li>
+                          <li>東京都 足立区足立3-23-14</li>
+                          <li>建物プレイス301号室</li>
+                          <li>電話番号: 09042097977</li>
                         </ul>
                         <button class="btn btn-primary mt-3" type="button" name="button">この住所を使う</button>
                       </div>
                     </div>
-                @if($loop->index % 3 == 2)
+                    <div class="col-4">
+                      <div class="address-body">
+                        <ul>
+                          <li class="mb-1"><strong>萩原孔太</strong></li>
+                          <li>111-1111</li>
+                          <li>東京都 足立区足立3-23-14</li>
+                          <li>建物プレイス301号室</li>
+                          <li>電話番号: 09042097977</li>
+                        </ul>
+                        <button class="btn btn-primary mt-3" type="button" name="button">この住所を使う</button>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="address-body">
+                        <ul>
+                          <li class="mb-1"><strong>萩原孔太</strong></li>
+                          <li>111-1111</li>
+                          <li>東京都 足立区足立3-23-14</li>
+                          <li>建物プレイス301号室</li>
+                          <li>電話番号: 09042097977</li>
+                        </ul>
+                        <button class="btn btn-primary mt-3" type="button" name="button">この住所を使う</button>
+                      </div>
+                    </div>
                   </div>
-                @endif
-                </div>
-                @endforeach
-                <div class="row mb-3">
-                  <a class="btn btn-secondary mt-4 mx-auto" href="/address">住所を追加</a>
+                  <div class="row mb-3">
+                    <a class="btn btn-secondary mt-4 mx-auto" href="/address">住所を追加</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        {{--モーダル表示部分終了--}}
       </div>
       <div class="address-body">
         <ul>
@@ -63,6 +84,8 @@
         </ul>
       </div>
     </div>
+
+    {{--配送希望日--}}
     <div class="col-4">
       <div class="deliver-header">
         <strong>配送希望日</strong><br>
@@ -72,6 +95,8 @@
         <input type="text" id="datepicker">
       </div>
     </div>
+
+    {{--支払い方法--}}
     <div class="col-4">
       <div class="payment-header">
         <strong>支払い方法</strong>
@@ -82,9 +107,6 @@
       </div>
     </div>
   </div>
-
-
-
   <div class="row">
     <div class="col">
       <div class="card-header">
@@ -101,6 +123,12 @@
             <td>¥{{$totalPrice}}</td>
           </tr>
         </table>
+        {{--
+        <ul class="list-group">
+          <li class="list-group-item">商品数 {{$totalQuantity}}点</li>
+          <li class="list-group-item">小計 ¥{{$totalPrice}}</li>
+        </ul>
+        --}}
       </div>
     </div>
   </div>

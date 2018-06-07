@@ -8,6 +8,7 @@ use App\Item;
 use App\Category;
 use App\Cart;
 use App\User;
+use App\Delivery;
 
 class ItemsController extends Controller
 {
@@ -102,9 +103,29 @@ class ItemsController extends Controller
     }
 
     public function confirm($user_id, Request $request) {
+      $user = Auth::user();
       $totalQuantity = $request->totalQuantity;
       $totalPrice = $request->totalPrice;
-      return view('confirm')->with(['user_id'=>$user_id, 'totalQuantity'=>$totalQuantity, 'totalPrice'=>$totalPrice]);
+      return view('confirm')->with(['user'=>$user, 'user_id'=>$user_id, 'totalQuantity'=>$totalQuantity, 'totalPrice'=>$totalPrice]);
+    }
+
+    public function address() {
+      return view('address');
+    }
+
+    public function post_address(Request $request) {
+      $delivery = new Delivery;
+      $user_id = Auth::id();
+      $delivery['user_id'] = $user_id;
+      $delivery['name'] = $request->name;
+      $delivery['postal_code'] = $request->postal_code;
+      $delivery['state'] = $request->state;
+      $delivery['city'] = $request->city;
+      $delivery['street'] = $request->street;
+      $delivery['building'] = $request->building;
+      $delivery['tel'] = $request->tel;
+      $delivery->save();
+      return redirect()->to('/confirm/{$user_id}');
     }
 
     public function done_payment() {

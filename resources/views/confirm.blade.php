@@ -32,17 +32,21 @@
                   @endif
                     <div class="col-4">
                       <div class="address-body">
-                        <ul>
-                          <li class="mb-1"><strong>{{$address->name}}</strong></li>
-                          <li>〒{{$address->postal_code}}</li>
-                          <li>{{$address->state}} {{$address->city}}{{$address->street}}</li>
-                          <li>{{$address->building}}</li>
-                          <li>電話番号: {{$address->tel}}</li>
-                        </ul>
-                        <button class="btn btn-primary mt-3" type="button" name="button">この住所を使う</button>
+                        <form class="form-group" method="post">
+                          {{ csrf_field() }}
+                          <ul>
+                            <li class="mb-1"><strong>{{$address->name}}</strong></li>
+                            <li>〒{{$address->postal_code}}</li>
+                            <li>{{$address->state}} {{$address->city}}{{$address->street}}</li>
+                            <li>{{$address->building}}</li>
+                            <li>電話番号: {{$address->tel}}</li>
+                          </ul>
+                          <input type="hidden" name="user_id" value="{{$address->user_id}}" id="user_id">
+                          <button class="btn btn-primary mt-3" type="submit" name="button" id="use_address">この住所を使う</button>
+                        </form>
                       </div>
                     </div>
-                  @if($loop->index % 3 == 2)
+                  @if($loop->index % 3 == 2 || $loop->last)
                   </div>
                   @endif
                   @endforeach
@@ -58,11 +62,11 @@
       </div>
       <div class="address-body">
         <ul>
-          <li>萩原孔太</li>
-          <li>111-1111</li>
-          <li>東京都 足立区足立3-23-14</li>
-          <li>建物プレイス301号室</li>
-          <li>電話番号: 09042097977</li>
+          <li>{{$user->selectUser()->name}}</li>
+          <li>{{$user->selectUser()->postal_code}}</li>
+          <li>{{$user->selectUser()->state}} {{$user->selectUser()->city}}{{$user->selectUser()->street}}</li>
+          <li>{{$user->selectUser()->building}}</li>
+          <li>電話番号: {{$user->selectUser()->tel}}</li>
         </ul>
       </div>
     </div>
@@ -98,19 +102,13 @@
         <table class="table table-bordered">
           <tr>
             <th>商品数</th>
-            <td>{{$totalQuantity}}点</td>
+            <td>{{$user->totalQuantity()}}点</td>
           </tr>
           <tr>
             <th>小計</th>
-            <td>¥{{$totalPrice}}</td>
+            <td>¥{{$user->totalPrice()}}</td>
           </tr>
         </table>
-        {{--
-        <ul class="list-group">
-          <li class="list-group-item">商品数 {{$totalQuantity}}点</li>
-          <li class="list-group-item">小計 ¥{{$totalPrice}}</li>
-        </ul>
-        --}}
       </div>
     </div>
   </div>
@@ -120,6 +118,14 @@
 @section('jQuery')
 <script>
 $(function() {
+
+  // モーダルのボタン押したらお届け先住所情報が変わる
+  $('#use_address').click(function() {
+
+  });
+
+
+
   // テキストボックスへ Datepicker を仕掛ける
   $( "#datepicker" ).datepicker({
     buttonImage: "https://webllica.com/wp-content/themes/webllica/img/calendar-icon2.png",
@@ -127,7 +133,7 @@ $(function() {
     showOn: "both"
   });
   // 日本語化
- $.datepicker.regional['ja'] = {
+  $.datepicker.regional['ja'] = {
    closeText: '閉じる',
    prevText: '<前',
    nextText: '次>',
@@ -145,7 +151,7 @@ $(function() {
    isRTL: false,
    showMonthAfterYear: true,
    yearSuffix: '年'};
- $.datepicker.setDefaults($.datepicker.regional['ja']);
+  $.datepicker.setDefaults($.datepicker.regional['ja']);
 });
 </script>
 @endsection

@@ -38,7 +38,7 @@
             </div>
           </div>
         </div>
-        @if($loop->index % 3 == 2)
+        @if($loop->index % 3 == 2 || $loop->last)
           </div>
         @endif
       @endforeach

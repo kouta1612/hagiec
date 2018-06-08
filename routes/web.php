@@ -25,3 +25,4 @@ Route::get('/confirm/{user_id}', 'ItemsController@confirm');
 Route::get('/address', 'ItemsController@address');
 Route::post('/address', 'ItemsController@post_address');
 Route::get('/done_payment', 'ItemsController@done_payment');
+Route::view('/temp1', 'temp1');

@@ -65,6 +65,44 @@
                     </div>
                   </div>
                   <div class="row mb-3">
+                    <div class="col-4">
+                      <div class="address-body">
+                        <ul>
+                          <li class="mb-1"><strong>萩原孔太</strong></li>
+                          <li>111-1111</li>
+                          <li>東京都 足立区足立3-23-14</li>
+                          <li>建物プレイス301号室</li>
+                          <li>電話番号: 09042097977</li>
+                        </ul>
+                        <button class="btn btn-primary mt-3" type="button" name="button">この住所を使う</button>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="address-body">
+                        <ul>
+                          <li class="mb-1"><strong>萩原孔太</strong></li>
+                          <li>111-1111</li>
+                          <li>東京都 足立区足立3-23-14</li>
+                          <li>建物プレイス301号室</li>
+                          <li>電話番号: 09042097977</li>
+                        </ul>
+                        <button class="btn btn-primary mt-3" type="button" name="button">この住所を使う</button>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="address-body">
+                        <ul>
+                          <li class="mb-1"><strong>萩原孔太</strong></li>
+                          <li>111-1111</li>
+                          <li>東京都 足立区足立3-23-14</li>
+                          <li>建物プレイス301号室</li>
+                          <li>電話番号: 09042097977</li>
+                        </ul>
+                        <button class="btn btn-primary mt-3" type="button" name="button">この住所を使う</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
                     <a class="btn btn-secondary mt-4 mx-auto" href="/address">住所を追加</a>
                   </div>
                 </div>

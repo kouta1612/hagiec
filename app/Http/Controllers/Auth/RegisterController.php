@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Delivery;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -62,16 +65,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'tel' => $data['tel'],
-            'state' => $data['state'],
-            'city' => $data['city'],
-            'street' => $data['street'],
-            'building' => $data['building'],
-            'postal_code' => $data['postal_code']
-        ]);
+
+      $user_id = DB::table('users')->orderBy('id', 'desc')->value('id') + 1;
+
+      Delivery::create([
+        'user_id' => $user_id,
+        'name' => $data['name'],
+        'tel' => $data['tel'],
+        'postal_code' => $data['postal_code'],
+        'state' => $data['state'],
+        'city' => $data['city'],
+        'street' => $data['street'],
+        'building' => $data['building']
+      ]);
+
+      return User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => bcrypt($data['password']),
+        'tel' => $data['tel']
+      ]);
+
     }
 }

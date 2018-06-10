@@ -15,17 +15,17 @@ class CreateDeliveriesTable extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_id');
+            $table->unsignedInteger('user_id');
             $table->string('name');
+            $table->string('tel');
             $table->string('postal_code');
             $table->string('state');
             $table->string('city');
             $table->string('street');
             $table->string('building');
-            $table->string('tel');
             $table->timestamps();
 
-
+            // $table->foreign('user_id')->references('id')->on('users');
             // $table->primary('id');
 
             // $table->foreign('id')

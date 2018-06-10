@@ -69,12 +69,12 @@ class ItemsController extends Controller
       // あるユーザのカート情報を取得
       $user_id = $request->user_id;
       $item_id = $request->item_id;
-      $items = Cart::where('user_id', $request->user_id)->get();
+      $items = Cart::where('user_id', $user_id)->get();
       $found = false;
       // あるユーザのカート内のitem情報を全列挙
       foreach($items as $item) {
         // もしカートに入れた商品IDと一致したら更新
-        if($item->item_id == $request->item_id) {
+        if($item->item_id == $item_id) {
           $found = true;
         }
       }

@@ -12,9 +12,9 @@
 */
 
 Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
 Route::redirect('/', '/login', 301);
 Route::get('/logout', 'ItemsController@logout');
-Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/top', 'ItemsController@top');
 Route::get('/detail/{id}', 'ItemsController@showDetail');
 Route::post('/detail', 'ItemsController@detail');
@@ -25,4 +25,3 @@ Route::get('/confirm/{user_id}', 'ItemsController@confirm');
 Route::get('/address', 'ItemsController@address');
 Route::post('/address', 'ItemsController@post_address');
 Route::get('/done_payment', 'ItemsController@done_payment');
-Route::view('/temp1', 'temp1');

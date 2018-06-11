@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Item;
+use App\Payment;
 
 class User extends Authenticatable
 {
@@ -34,12 +35,17 @@ class User extends Authenticatable
     // public function __get(User $user)
 
     public function carts() {
-      $carts = Cart::where('user_id', $this->id)->get();
+      $carts = Cart::where('user_id', $this->id)->where('status', 1)->get();
       return $carts;
     }
 
     public function addresses() {
       $addresses = Delivery::where('user_id', $this->id)->get();
+      return $addresses;
+    }
+
+    public function selected_address() {
+      $addresses = Delivery::where('user_id', $this->id)->where('status', 1)->first();
       return $addresses;
     }
 
@@ -61,9 +67,14 @@ class User extends Authenticatable
     }
 
     public function selectUser() {
-      $user_id = Auth::id();
-      $user = User::where('id', $user_id)->first();
+      $user = User::where('id', $this->id)->first();
       return $user;
     }
+
+    public function payment_status() {
+      $payment = Payment::all()->where('user_id', $this->id)->first();
+      return $payment;
+    }
+
 
 }

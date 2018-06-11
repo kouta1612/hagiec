@@ -16,6 +16,7 @@ class CreateDeliveriesTable extends Migration
         Schema::create('deliveries', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('status');
             $table->string('name');
             $table->string('tel');
             $table->string('postal_code');

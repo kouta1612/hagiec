@@ -11,14 +11,15 @@ class DeliveriesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('deliveries')->insert([
-          'user_id' => "1",
-          'name' => ,
-          'tel' => ,
-          'postal_code' => ,
-          'state' => ,
-          'city' => ,
-          'street' => ,
-          'builing' =>
-        ]);
+        // DB::table('deliveries')->insert([
+        //   'user_id' => "1",
+        //   'name' => ,
+        //   'tel' => ,
+        //   'postal_code' => ,
+        //   'state' => ,
+        //   'city' => ,
+        //   'street' => ,
+        //   'builing' =>
+        // ]);
     }
+}

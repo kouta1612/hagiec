@@ -5,7 +5,84 @@
 @section('content')
 <div class="container">
   <div class="row">
-    <button type="button" class="btn btn-primary mb-5 mx-auto">注文確定</button>
+    <div class="col-12 text-center">
+      {{--モーダル表示部分--}}
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">お届け先を選択してください</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                @foreach($user->addresses() as $address)
+                @if($loop->index % 3 == 0)
+                <div class="row mb-3">
+                @endif
+                  <div class="col-4">
+                    <div class="address-body">
+                      <form class="form-group" method="post" action="/confirm">
+                        {{ csrf_field() }}
+                        <ul>
+                          <li class="mb-1"><strong>{{$address->name}}</strong></li>
+                          <li>〒{{$address->postal_code}}</li>
+                          <li>{{$address->state}} {{$address->city}}{{$address->street}}</li>
+                          <li>{{$address->building}}</li>
+                          <li>電話番号: {{$address->tel}}</li>
+                        </ul>
+                        <input type="hidden" name="id" value="{{$address->id}}">
+                        <button class="btn btn-primary mt-3 select_address" type="submit" name="button">この住所を使う</button>
+                      </form>
+                    </div>
+                  </div>
+                @if($loop->index % 3 == 2 || $loop->last)
+                </div>
+                @endif
+                @endforeach
+                <div class="row mb-3">
+                  <a class="btn btn-secondary mt-4 mx-auto" href="/address">住所を追加</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{--モーダル表示部分終了--}}
+      {{--モーダル表示部分--}}
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">支払い方法を選択してください</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="payment_form" class="form-group" action="/payment/0" method="post">
+                {{ csrf_field() }}
+                <div class="text-center py-5">
+                  {{--
+                    <button class="btn btn-primary mr-5 submit" id="money">代金引換</button>
+                    <button class="btn btn-primary submit" id="credit">クレジット</button>
+                   --}}
+                   <button class="btn btn-primary mr-5 submit" data-action="/payment/0">代金引換</button>
+                   <button class="btn btn-primary submit" data-action="/payment/1">クレジット</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{--モーダル表示部分終了--}}
+      <form class="form-group" action="/done_payment" method="post">
+        {{ csrf_field() }}
+        <button id="done_payment" type="submit" class="btn btn-primary mb-5 mx-auto">注文確定</button>
+
+    </div>
   </div>
   <div class="row border border-muted mb-3 mx-auto p-3">
     {{--お届け先住所--}}
@@ -14,59 +91,17 @@
       <div class="address-header">
         <strong>お届け先住所</strong>
         <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">変更</a>
-        {{--モーダル表示部分--}}
-        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">お届け先を選択してください</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="container-fluid">
-                  @foreach($user->addresses() as $address)
-                  @if($loop->index % 3 == 0)
-                  <div class="row mb-3">
-                  @endif
-                    <div class="col-4">
-                      <div class="address-body">
-                        <form class="form-group" method="post">
-                          {{ csrf_field() }}
-                          <ul>
-                            <li class="mb-1"><strong>{{$address->name}}</strong></li>
-                            <li>〒{{$address->postal_code}}</li>
-                            <li>{{$address->state}} {{$address->city}}{{$address->street}}</li>
-                            <li>{{$address->building}}</li>
-                            <li>電話番号: {{$address->tel}}</li>
-                          </ul>
-                          <input type="hidden" name="user_id" value="{{$address->user_id}}" id="user_id">
-                          <button class="btn btn-primary mt-3" type="submit" name="button" id="use_address">この住所を使う</button>
-                        </form>
-                      </div>
-                    </div>
-                  @if($loop->index % 3 == 2 || $loop->last)
-                  </div>
-                  @endif
-                  @endforeach
-                  <div class="row mb-3">
-                    <a class="btn btn-secondary mt-4 mx-auto" href="/address">住所を追加</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {{--モーダル表示部分終了--}}
+
       </div>
+      {{--確認画面でのお届け先住所--}}
       <div class="address-body">
         <ul>
-          <li>{{$user->selectUser()->name}}</li>
-          <li>{{$user->selectUser()->postal_code}}</li>
-          <li>{{$user->selectUser()->state}} {{$user->selectUser()->city}}{{$user->selectUser()->street}}</li>
-          <li>{{$user->selectUser()->building}}</li>
-          <li>電話番号: {{$user->selectUser()->tel}}</li>
+          <li>{{$user->selected_address()->name}}</li>
+          <li>{{$user->selected_address()->postal_code}}</li>
+          <li>{{$user->selected_address()->state}} {{$user->selected_address()->city}}{{$user->selected_address()->street}}</li>
+          <li>{{$user->selected_address()->building}}</li>
+          <li>電話番号: {{$user->selected_address()->tel}}</li>
+          <li><input type="hidden" name="delivery_id" value="{{$user->selected_address()->id}}"></li>
         </ul>
       </div>
     </div>
@@ -75,10 +110,9 @@
     <div class="col-4">
       <div class="deliver-header">
         <strong>配送希望日</strong><br>
-        {{--<a href="" id="deliver-modal">変更</a>--}}
       </div>
       <div class="deliver-body">
-        <input type="text" id="datepicker">
+        <input type="text" name="delivery_date" id="datepicker">
       </div>
     </div>
 
@@ -86,10 +120,16 @@
     <div class="col-4">
       <div class="payment-header">
         <strong>支払い方法</strong>
-        <a href="#" id="payment-modal">変更</a>
+        <a href="" data-toggle="modal" data-target="#exampleModal">変更</a>
       </div>
       <div class="payment-body">
+        @if($user->payment_status()->payment_status == 0)
+        現金引換
+        <input type="hidden" name="payment" value="現金引換">
+        @elseif($user->payment_status()->payment_status == 1)
         クレジットカード
+        <input type="hidden" name="payment" value="クレジットカード">
+        @endif
       </div>
     </div>
   </div>
@@ -113,21 +153,21 @@
     </div>
   </div>
 </div>
+</form>
 @endsection
 
 @section('jQuery')
 <script>
 $(function() {
 
-  // モーダルのボタン押したらお届け先住所情報が変わる
-  $('#use_address').click(function() {
-
+  // クレジットor現金引換ボタン押下時の処理振分け
+  $('.submit').click(function() {
+    $(this).parents('form').attr('action', $(this).data('action'));
+    $(this).parents('form').submit();
   });
 
-
-
   // テキストボックスへ Datepicker を仕掛ける
-  $( "#datepicker" ).datepicker({
+  $("#datepicker").datepicker({
     buttonImage: "https://webllica.com/wp-content/themes/webllica/img/calendar-icon2.png",
     buttonImageOnly: true,
     showOn: "both"
@@ -152,6 +192,7 @@ $(function() {
    showMonthAfterYear: true,
    yearSuffix: '年'};
   $.datepicker.setDefaults($.datepicker.regional['ja']);
+
 });
 </script>
 @endsection

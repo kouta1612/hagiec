@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Delivery;
+use App\Payment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -70,6 +71,7 @@ class RegisterController extends Controller
 
       Delivery::create([
         'user_id' => $user_id,
+        'status' => 1,
         'name' => $data['name'],
         'tel' => $data['tel'],
         'postal_code' => $data['postal_code'],
@@ -79,11 +81,17 @@ class RegisterController extends Controller
         'building' => $data['building']
       ]);
 
+      Payment::create([
+        'user_id' => $user_id,
+        'payment_status' => 0
+      ]);
+
       return User::create([
         'name' => $data['name'],
         'email' => $data['email'],
         'password' => bcrypt($data['password']),
-        'tel' => $data['tel']
+        'tel' => $data['tel'],
+        'payment_status' => 0
       ]);
 
     }

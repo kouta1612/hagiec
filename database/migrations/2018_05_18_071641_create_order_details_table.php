@@ -17,9 +17,8 @@ class CreateOrderDetailsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('item_id');
-            $table->unsignedInteger('order_number');
-            $table->unsignedInteger('notax_price');
-            $table->unsignedInteger('intax_price');
+            $table->unsignedInteger('payment_number');
+            $table->unsignedInteger('price');
             $table->timestamps();
 
             // $table->foreign('order_id')

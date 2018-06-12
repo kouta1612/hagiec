@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Item;
@@ -12,6 +13,7 @@ use App\Delivery;
 use App\Payment;
 use App\Order;
 use App\OrderDetail;
+use Carbon\Carbon;
 
 class ItemsController extends Controller
 {
@@ -20,11 +22,35 @@ class ItemsController extends Controller
       return redirect('login');
     }
 
-    public function top() {
+    // public function top(Request $request) {
+    //   $user_id = Auth::id();
+    //   $items = Item::all();
+    //   $categories = Category::all();
+    //   if(isset($_POST['category']) && is_array($_POST['category'])) {
+    //     $a = $_POST['category'];
+    //     dd($a);
+    //   }
+    //   return view('top', ['user_id' => $user_id, 'items' => $items, 'categories' => $categories]);
+    // }
+
+    public function top(Request $request) {
+      $item_name = $request->item_name;
+      $category_ids = $request->category;
+      if(!empty($item_name) && !empty($category_ids)) {
+        $items = Item::where('name', 'like', '%'.$item_name.'%')->whereIn('category_id', $request->category)->get();
+        var_dump(1);
+        dd($items);
+      } else if(!empty($item_name)) {
+        $items = Item::where('name', 'like', '%'.$item_name.'%')->get();
+      } else if(!empty($category_ids)) {
+        $items = Item::whereIn('category_id', $category_ids)->get();
+      } else {
+        $items = Item::all();
+      }
       $user_id = Auth::id();
-      $items = Item::all();
-      $categorys = Category::all();
-      return view('top', ['user_id' => $user_id, 'items' => $items, 'categorys' => $categorys]);
+      $categories = Category::all();
+      // dd($category_ids);
+      return view('top', ['user_id' => $user_id, 'items' => $items, 'categories' => $categories, 'category_ids' => $category_ids]);
     }
 
     public function showDetail($id) {
@@ -58,6 +84,7 @@ class ItemsController extends Controller
       } else {
         $cart = Cart::where('user_id', $user_id)->where('item_id', $item_id)->first();
         $cart['quantity'] += 1;
+        $cart['status'] = 1;
         $cart->save();
       }
       return redirect()->to("cart/{$user_id}");
@@ -69,11 +96,13 @@ class ItemsController extends Controller
     }
 
     public function cart(Request $request) {
+
       // あるユーザのカート情報を取得
       $user_id = $request->user_id;
       $item_id = $request->item_id;
       $items = Cart::where('user_id', $user_id)->get();
       $found = false;
+
       // あるユーザのカート内のitem情報を全列挙
       foreach($items as $item) {
         // もしカートに入れた商品IDと一致したら更新
@@ -93,6 +122,7 @@ class ItemsController extends Controller
       } else {
         $cart = Cart::where('user_id', $user_id)->where('item_id', $item_id)->first();
         $cart['quantity'] += 1;
+        $cart['status'] = 1;
         $cart->save();
       }
       return redirect()->to("cart/{$user_id}");
@@ -161,26 +191,41 @@ class ItemsController extends Controller
 
     public function done_payment(Request $request) {
       $user_id = Auth::id();
-      $user = User::where('id', $user_id)->first();
 
-      $carts = $user->carts();
-      foreach($carts as $cart) {
-        
-      }
-
-
-      $delivery_date = $request->delivery_date;
-      $delivery_method = $request->payment;
-      $delivery_id = $request->delivery_id;
+      // 注文テーブルの更新
       $order = new Order;
       $order['user_id'] = $user_id;
-      $order['order_time'] = "2018/09/11";
-      $order['delivery_day'] = $delivery_date;
-      $order['delivery_method'] = $delivery_method;
-      $order['delivery_to_id'] = $delivery_id;
+      $order['order_time'] = new Carbon();
+      $order['delivery_day'] = $request->delivery_date;
+      $order['delivery_method'] = $request->payment;
+      $order['delivery_to_id'] = $request->delivery_id;
       $order->save();
 
+      $user = User::where('id', $user_id)->first();
+      $carts = $user->carts();
 
+      // 注文明細テーブルと商品テーブルとカートテーブルの登録
+      foreach($carts as $cart) {
+        $order_detail = new OrderDetail;
+        $order_detail['order_id'] = Order::orderBy('id', 'desc')->first()->id;
+        $order_detail['item_id'] = $cart->item_id;
+        $order_detail['payment_number'] = $cart->quantity;
+        $order_detail['price'] = Item::where('id', $cart->item_id)->first()->price;
+        $order_detail->save();
+
+        // 商品在庫数からカート内商品購入数を引いて更新
+        $item = Item::where('id', $cart->item_id)->first();
+        $item->stock_number -= $cart->quantity;
+        $item->save();
+
+        // カート内商品のステータスと購入数を0にする
+        //　購入数は登録後に更新
+        $cart->status = 0;
+        $cart->save();
+        $cart->quantity = 0;
+        $cart->done_order_date = new Carbon();
+        $cart->save();
+      }
 
       return view('done_payment');
     }

@@ -17,7 +17,7 @@ class CreateItemsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('price');
-            $table->string('category');
+            $table->unsignedInteger('category_id');
             $table->string('country');
             $table->string('description');
             $table->string('delivery_date');

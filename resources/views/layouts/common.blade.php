@@ -15,9 +15,9 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top mb-5">
     <div class="container">
       <a id="logo" class="navbar-brand" href="/top">hagiEC</a>
-      <form class="form-inline my-2 my-lg-0 py-2" action="/top" method="post">
+      <form class="form-inline my-2 my-lg-0 py-2" action="/top" method="get">
         <div class="form-group">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control mr-sm-2" name="item_name" type="search" placeholder="Search" aria-label="Search">
         </div>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>

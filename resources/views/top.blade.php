@@ -7,14 +7,45 @@
   <div class="row">
     <div class="col-3">
       <h3 class="mb-4">カテゴリ</h3>
-      <form>
+      <form action="/top" method="post">
         {{ csrf_field() }}
-        @foreach($categorys as $category)
-          <p><input type="checkbox" class="mr-1" id="checkbox{{$loop->index}}>">
-            <label for="checkbox{{$loop->index}}>">{{$category->name}}</label>
+        @foreach($categories as $category)
+<p>
+  @foreach($category_ids as $category_id)
+    @if($category_id == $category->id)
+      <?php $flg = true ?>
+    @break
+    @else
+      <?php $flg = false ?>
+    @endif
+  @endforeach
+      <?php if($flg) {?>
+        <input checked type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" id="checkbox{{$loop->index}}" type="checkbox">
+        <label for="checkbox{{$loop->index}}>">{{$category->name}}</label>
+      <?php } else { ?>
+        <input type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" id="checkbox{{$loop->index}}" type="checkbox">
+        <label for="checkbox{{$loop->index}}>">{{$category->name}}</label>
+      <?php } ?>
+@endforeach
+        {{--@foreach($categories as $category)
+          <p>
+            @foreach($category_ids as $category_id)
+            @if($category_id == $category->id)
+              <input checked type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" id="checkbox{{$loop->index}}">
+              <label for="checkbox{{$loop->index}}>">{{$category->name}}</label>
+              @break
+            @endif
+              <input type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" id="checkbox{{$loop->index}}">
+              <label for="checkbox{{$loop->index}}>">{{$category->name}}</label>
+            @endforeach
+
+            <!-- <input type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" id="checkbox{{$loop->index}}">
+            <label for="checkbox{{$loop->index}}>">{{$category->name}}</label> -->
           </p>
+          @break
         @endforeach
-        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        --}}
+        <button type="submit" class="btn btn-primary mt-3">Search</button>
       </form>
     </div>
     <div class="col-9">

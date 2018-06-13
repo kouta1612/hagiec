@@ -10,41 +10,12 @@
       <form action="/top" method="post">
         {{ csrf_field() }}
         @foreach($categories as $category)
-<p>
-  @foreach($category_ids as $category_id)
-    @if($category_id == $category->id)
-      <?php $flg = true ?>
-    @break
-    @else
-      <?php $flg = false ?>
-    @endif
-  @endforeach
-      <?php if($flg) {?>
-        <input checked type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" id="checkbox{{$loop->index}}" type="checkbox">
-        <label for="checkbox{{$loop->index}}>">{{$category->name}}</label>
-      <?php } else { ?>
-        <input type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" id="checkbox{{$loop->index}}" type="checkbox">
-        <label for="checkbox{{$loop->index}}>">{{$category->name}}</label>
-      <?php } ?>
-@endforeach
-        {{--@foreach($categories as $category)
           <p>
-            @foreach($category_ids as $category_id)
-            @if($category_id == $category->id)
-              <input checked type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" id="checkbox{{$loop->index}}">
-              <label for="checkbox{{$loop->index}}>">{{$category->name}}</label>
-              @break
-            @endif
-              <input type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" id="checkbox{{$loop->index}}">
-              <label for="checkbox{{$loop->index}}>">{{$category->name}}</label>
-            @endforeach
-
-            <!-- <input type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" id="checkbox{{$loop->index}}">
-            <label for="checkbox{{$loop->index}}>">{{$category->name}}</label> -->
+            <label for="{{$loop->index}}">
+              <input id="{{$loop->index}}" type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" @if(is_array($category_ids) && in_array($category->id, $category_ids)) checked @endif>{{$category->name}}
+            </label>
           </p>
-          @break
         @endforeach
-        --}}
         <button type="submit" class="btn btn-primary mt-3">Search</button>
       </form>
     </div>

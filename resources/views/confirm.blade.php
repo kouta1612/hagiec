@@ -6,7 +6,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12 text-center">
-      {{--モーダル表示部分--}}
+      {{--住所モーダル表示部分--}}
       <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -50,8 +50,8 @@
           </div>
         </div>
       </div>
-      {{--モーダル表示部分終了--}}
-      {{--モーダル表示部分--}}
+      {{--住所モーダル表示部分終了--}}
+      {{--支払いモーダル表示部分--}}
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -77,7 +77,7 @@
           </div>
         </div>
       </div>
-      {{--モーダル表示部分終了--}}
+      {{--支払いモーダル表示部分終了--}}
       <form class="form-group" action="/done_payment" method="post">
         {{ csrf_field() }}
         <button id="done_payment" type="submit" class="btn btn-primary mb-5 mx-auto">注文確定</button>
@@ -85,13 +85,12 @@
     </div>
   </div>
   <div class="row border border-muted mb-3 mx-auto p-3">
-    {{--お届け先住所--}}
+    {{--確認画面でのお届け先住所--}}
     <div class="col-4">
       {{--確認画面でのお届け先住所--}}
       <div class="address-header">
         <strong>お届け先住所</strong>
         <a href="" data-toggle="modal" data-target=".bd-example-modal-lg">変更</a>
-
       </div>
       {{--確認画面でのお届け先住所--}}
       <div class="address-body">
@@ -112,7 +111,7 @@
         <strong>配送希望日</strong><br>
       </div>
       <div class="deliver-body">
-        <input type="text" name="delivery_date" id="datepicker">
+        <input type="text" name="delivery_date" id="datepicker" required>
       </div>
     </div>
 
@@ -186,7 +185,7 @@ $(function() {
    dayNamesShort: ['日','月','火','水','木','金','土'],
    dayNamesMin: ['日','月','火','水','木','金','土'],
    weekHeader: '週',
-   dateFormat: 'yy/mm/dd',
+   dateFormat: 'yy-mm-dd',
    firstDay: 0,
    isRTL: false,
    showMonthAfterYear: true,

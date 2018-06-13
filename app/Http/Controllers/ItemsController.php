@@ -22,35 +22,21 @@ class ItemsController extends Controller
       return redirect('login');
     }
 
-    // public function top(Request $request) {
-    //   $user_id = Auth::id();
-    //   $items = Item::all();
-    //   $categories = Category::all();
-    //   if(isset($_POST['category']) && is_array($_POST['category'])) {
-    //     $a = $_POST['category'];
-    //     dd($a);
-    //   }
-    //   return view('top', ['user_id' => $user_id, 'items' => $items, 'categories' => $categories]);
-    // }
-
     public function top(Request $request) {
-      $item_name = $request->item_name;
+      $search_item_name = $request->search_item_name;
       $category_ids = $request->category;
-      if(!empty($item_name) && !empty($category_ids)) {
-        $items = Item::where('name', 'like', '%'.$item_name.'%')->whereIn('category_id', $request->category)->get();
-        var_dump(1);
-        dd($items);
-      } else if(!empty($item_name)) {
-        $items = Item::where('name', 'like', '%'.$item_name.'%')->get();
-      } else if(!empty($category_ids)) {
+      if(!empty($search_item_name) && isset($category_ids)) {
+        $items = Item::where('name', 'like', '%'.$search_item_name.'%')->whereIn('category_id', $category_ids)->get();
+      } else if(!empty($search_item_name)) {
+        $items = Item::where('name', 'like', '%'.$search_item_name.'%')->get();
+      } else if(isset($category_ids)) {
         $items = Item::whereIn('category_id', $category_ids)->get();
       } else {
         $items = Item::all();
       }
       $user_id = Auth::id();
       $categories = Category::all();
-      // dd($category_ids);
-      return view('top', ['user_id' => $user_id, 'items' => $items, 'categories' => $categories, 'category_ids' => $category_ids]);
+      return view('top', ['user_id' => $user_id, 'items' => $items, 'categories' => $categories, 'category_ids' => $category_ids, 'search_item_name' => $search_item_name]);
     }
 
     public function showDetail($id) {
@@ -96,7 +82,6 @@ class ItemsController extends Controller
     }
 
     public function cart(Request $request) {
-
       // あるユーザのカート情報を取得
       $user_id = $request->user_id;
       $item_id = $request->item_id;
@@ -125,6 +110,7 @@ class ItemsController extends Controller
         $cart['status'] = 1;
         $cart->save();
       }
+
       return redirect()->to("cart/{$user_id}");
     }
 
@@ -223,7 +209,6 @@ class ItemsController extends Controller
         $cart->status = 0;
         $cart->save();
         $cart->quantity = 0;
-        $cart->done_order_date = new Carbon();
         $cart->save();
       }
 

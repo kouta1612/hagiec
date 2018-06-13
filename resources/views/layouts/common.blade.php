@@ -15,9 +15,14 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top mb-5">
     <div class="container">
       <a id="logo" class="navbar-brand" href="/top">hagiEC</a>
-      <form class="form-inline my-2 my-lg-0 py-2" action="/top" method="get">
+      <form class="form-inline my-2 my-lg-0 py-2" action="/top" method="post">
+        {{csrf_field()}}
         <div class="form-group">
-          <input class="form-control mr-sm-2" name="item_name" type="search" placeholder="Search" aria-label="Search">
+          @if(isset($search_item_name))
+          <input class="form-control mr-sm-2" name="search_item_name" value="{{$search_item_name}}" type="text" placeholder="Search" aria-label="Search">
+          @else
+          <input class="form-control mr-sm-2" name="search_item_name" type="text" placeholder="Search" aria-label="Search">
+          @endif
         </div>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>

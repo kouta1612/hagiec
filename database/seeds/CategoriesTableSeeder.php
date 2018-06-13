@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -12,13 +13,19 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
       DB::table('categories')->insert([
-        'name' => "本"
+        'name' => "本",
+        'created_at' => new Carbon(),
+        'updated_at' => new Carbon(),
       ]);
       DB::table('categories')->insert([
-        'name' => "ゲーム"
+        'name' => "ゲーム",
+        'created_at' => new Carbon(),
+        'updated_at' => new Carbon(),
       ]);
       DB::table('categories')->insert([
-        'name' => "パソコン"
+        'name' => "パソコン",
+        'created_at' => new Carbon(),
+        'updated_at' => new Carbon(),
       ]);
     }
 }

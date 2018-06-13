@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class ItemsTableSeeder extends Seeder
 {
@@ -19,7 +20,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "シーンに合わせてカタチを変えるゲーム機「Nintendo Switch」",
           'delivery_date' => "3",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/61LB0JRyb9L._SL1063_.jpg",
-          'stock_number' => 10
+          'stock_number' => 10,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "リーダブルコード",
@@ -29,7 +32,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "美しいコードを見ると感動する。優れたコードは見た瞬間に何をしているかが伝わってくる。",
           'delivery_date' => "1",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51MgH8Jmr3L._SX352_BO1,204,203,200_.jpg",
-          'stock_number' => 24
+          'stock_number' => 24,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "デザインパターン入門 ",
@@ -39,7 +44,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "GoFの『デザインパターン』で紹介された23個のパターンを、オブジェクト指向の初心者にもわかるようにやさしく解説。",
           'delivery_date' => "1",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51QsmvkObML._SX392_BO1,204,203,200_.jpg",
-          'stock_number' => 30
+          'stock_number' => 30,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "Switch",
@@ -49,7 +56,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "シーンに合わせてカタチを変えるゲーム機「Nintendo Switch」",
           'delivery_date' => "3",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/61LB0JRyb9L._SL1063_.jpg",
-          'stock_number' => 10
+          'stock_number' => 10,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "リーダブルコード",
@@ -59,7 +68,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "美しいコードを見ると感動する。優れたコードは見た瞬間に何をしているかが伝わってくる。",
           'delivery_date' => "1",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51MgH8Jmr3L._SX352_BO1,204,203,200_.jpg",
-          'stock_number' => 24
+          'stock_number' => 24,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "デザインパターン入門 ",
@@ -69,7 +80,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "GoFの『デザインパターン』で紹介された23個のパターンを、オブジェクト指向の初心者にもわかるようにやさしく解説。",
           'delivery_date' => "1",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51QsmvkObML._SX392_BO1,204,203,200_.jpg",
-          'stock_number' => 30
+          'stock_number' => 30,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "Switch",
@@ -79,7 +92,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "シーンに合わせてカタチを変えるゲーム機「Nintendo Switch」",
           'delivery_date' => "3",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/61LB0JRyb9L._SL1063_.jpg",
-          'stock_number' => 10
+          'stock_number' => 10,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "リーダブルコード",
@@ -89,7 +104,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "美しいコードを見ると感動する。優れたコードは見た瞬間に何をしているかが伝わってくる。",
           'delivery_date' => "1",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51MgH8Jmr3L._SX352_BO1,204,203,200_.jpg",
-          'stock_number' => 24
+          'stock_number' => 24,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "デザインパターン入門 ",
@@ -99,7 +116,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "GoFの『デザインパターン』で紹介された23個のパターンを、オブジェクト指向の初心者にもわかるようにやさしく解説。",
           'delivery_date' => "1",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51QsmvkObML._SX392_BO1,204,203,200_.jpg",
-          'stock_number' => 30
+          'stock_number' => 30,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "Switch",
@@ -109,7 +128,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "シーンに合わせてカタチを変えるゲーム機「Nintendo Switch」",
           'delivery_date' => "3",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/61LB0JRyb9L._SL1063_.jpg",
-          'stock_number' => 10
+          'stock_number' => 10,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "リーダブルコード",
@@ -119,7 +140,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "美しいコードを見ると感動する。優れたコードは見た瞬間に何をしているかが伝わってくる。",
           'delivery_date' => "1",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51MgH8Jmr3L._SX352_BO1,204,203,200_.jpg",
-          'stock_number' => 24
+          'stock_number' => 24,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "デザインパターン入門 ",
@@ -129,7 +152,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "GoFの『デザインパターン』で紹介された23個のパターンを、オブジェクト指向の初心者にもわかるようにやさしく解説。",
           'delivery_date' => "1",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51QsmvkObML._SX392_BO1,204,203,200_.jpg",
-          'stock_number' => 30
+          'stock_number' => 30,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "Switch",
@@ -139,7 +164,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "シーンに合わせてカタチを変えるゲーム機「Nintendo Switch」",
           'delivery_date' => "3",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/61LB0JRyb9L._SL1063_.jpg",
-          'stock_number' => 10
+          'stock_number' => 10,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "リーダブルコード",
@@ -149,7 +176,9 @@ class ItemsTableSeeder extends Seeder
           'description' => "美しいコードを見ると感動する。優れたコードは見た瞬間に何をしているかが伝わってくる。",
           'delivery_date' => "1",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51MgH8Jmr3L._SX352_BO1,204,203,200_.jpg",
-          'stock_number' => 24
+          'stock_number' => 24,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
         DB::table('items')->insert([
           'name' => "デザインパターン入門 ",
@@ -159,7 +188,45 @@ class ItemsTableSeeder extends Seeder
           'description' => "GoFの『デザインパターン』で紹介された23個のパターンを、オブジェクト指向の初心者にもわかるようにやさしく解説。",
           'delivery_date' => "1",
           'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51QsmvkObML._SX392_BO1,204,203,200_.jpg",
-          'stock_number' => 30
+          'stock_number' => 30,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
+        ]);
+        DB::table('items')->insert([
+          'name' => "Switch",
+          'price' => 32000,
+          'category_id' => 2,
+          'country' => "日本",
+          'description' => "シーンに合わせてカタチを変えるゲーム機「Nintendo Switch」",
+          'delivery_date' => "3",
+          'image_url' => "https://images-na.ssl-images-amazon.com/images/I/61LB0JRyb9L._SL1063_.jpg",
+          'stock_number' => 10,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
+        ]);
+        DB::table('items')->insert([
+          'name' => "リーダブルコード",
+          'price' => 2500,
+          'category_id' => 1,
+          'country' => "日本",
+          'description' => "美しいコードを見ると感動する。優れたコードは見た瞬間に何をしているかが伝わってくる。",
+          'delivery_date' => "1",
+          'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51MgH8Jmr3L._SX352_BO1,204,203,200_.jpg",
+          'stock_number' => 24,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
+        ]);
+        DB::table('items')->insert([
+          'name' => "デザインパターン入門 ",
+          'price' => 4000,
+          'category_id' => 1,
+          'country' => "日本",
+          'description' => "GoFの『デザインパターン』で紹介された23個のパターンを、オブジェクト指向の初心者にもわかるようにやさしく解説。",
+          'delivery_date' => "1",
+          'image_url' => "https://images-na.ssl-images-amazon.com/images/I/51QsmvkObML._SX392_BO1,204,203,200_.jpg",
+          'stock_number' => 30,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
         ]);
     }
 }

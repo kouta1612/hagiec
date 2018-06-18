@@ -11,7 +11,7 @@
   </div>
   <div class="row">
     <div class="col mb-5">
-      <h3>注文番号：2356195619</h3>
+      <h3>注文番号：{{$order_id}}</h3>
     </div>
   </div>
   <div class="row">

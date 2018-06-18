@@ -81,7 +81,6 @@
       <form class="form-group" action="/done_payment" method="post">
         {{ csrf_field() }}
         <button id="done_payment" type="submit" class="btn btn-primary mb-5 mx-auto">注文確定</button>
-
     </div>
   </div>
   <div class="row border border-muted mb-3 mx-auto p-3">
@@ -110,9 +109,14 @@
       <div class="deliver-header">
         <strong>配送希望日</strong><br>
       </div>
-      <div class="deliver-body">
-        <input type="text" name="delivery_date" id="datepicker" required>
-      </div>
+        <div class="deliver-body form-group{{ $errors->has('delivery_date') ? 'has-error' : '' }}">
+          <input type="text" name="delivery_date" id="datepicker" value="{{old('delivery_date')}}" required autofocus>
+          @if($errors->has('delivery_date'))
+            <span class="form-text text-danger">
+              <strong>{{ $errors->first('delivery_date') }}</strong>
+            </span>
+          @endif
+        </div>
     </div>
 
     {{--支払い方法--}}
@@ -169,7 +173,8 @@ $(function() {
   $("#datepicker").datepicker({
     buttonImage: "https://webllica.com/wp-content/themes/webllica/img/calendar-icon2.png",
     buttonImageOnly: true,
-    showOn: "both"
+    showOn: "both",
+    minDate: '+2d',
   });
   // 日本語化
   $.datepicker.regional['ja'] = {
@@ -191,7 +196,6 @@ $(function() {
    showMonthAfterYear: true,
    yearSuffix: '年'};
   $.datepicker.setDefaults($.datepicker.regional['ja']);
-
 });
 </script>
 @endsection

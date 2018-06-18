@@ -21,6 +21,7 @@ Route::get('/detail/{id}', 'ItemsController@showDetail');
 Route::post('/detail', 'ItemsController@detail');
 Route::get('/cart/{user_id}', 'ItemsController@showCart');
 Route::post('/cart', 'ItemsController@cart');
+Route::post('/ajax_cart', 'ItemsController@ajax_cart');
 Route::delete('/destroy/{item_id}','ItemsController@destroy');
 Route::get('/confirm/{user_id}', 'ItemsController@confirm');
 Route::post('/confirm', 'ItemsController@select_address');
@@ -28,3 +29,7 @@ Route::get('/address', 'ItemsController@show_address_form');
 Route::post('/address', 'ItemsController@post_address');
 Route::post('/payment/{status}', 'ItemsController@payment');
 Route::post('/done_payment', 'ItemsController@done_payment');
+Route::get('/sample/mailable/preview', function() {
+  return new App\Mail\SampleNotification();
+});
+Route::get('/sample/mailable/send', 'SampleController@SampleNotification');

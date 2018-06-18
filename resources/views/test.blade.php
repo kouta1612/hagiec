@@ -1,24 +1,41 @@
-@extends('layouts/common')
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>test</title>
 
-@section('title', '決済確認画面')
+  </head>
+  <body>
+    <p>ajaxの練習</p>
+    <button id="button">もっと読む</button>
+    <div id="message"></div>
 
-@section('content')
-<div class="container">
-  <div class="row">
-    <form id="form1" class="form-group" action="index" method="post">
-      <form id="form2" class="form-group" action="show" method="post">
-        <input type="text" name="name">
-        <input type="submit" value="送信">
-      </form>
-      <input type="email" name="email">
-      <input type="submit" value="送信">
-    </form>
-  </div>
-</div>
-@endsection
-
-@section('jQuery')
-<script>
-
-</script>
-@endsection
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script>
+      $(function() {
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+        $('#button').click(function() {
+          $.ajax({
+            type: 'GET',
+            url: '/ajax',
+            data: {
+              'word':'test',
+              'name':'萩原'
+            },
+            success: function(data) {
+              $('#message').append(data).append(name);
+            },
+            error: function() {
+              alert('問題がありました。');
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -76,6 +76,11 @@
 <script>
   // ページ起動時の値
   $(function() {
+    $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
     $totalQuantity = 0;
     $totalPrice = 0;
     $('#cartItems').find('.cartItem').each(function() {
@@ -99,30 +104,29 @@
       $totalQuantity += $quantity;
       $totalPrice += $quantity * $price;
       $item_id = $(this).attr('id');
-
+      $user_id = {{Auth::id()}};
       // ajaxでカートテーブルの数量を変更
       $.ajax({
-        url:'/cart',
         type:'POST',
+        url:'/ajax_cart',
         data:{
-          'user_id':{{Auth::id()}},
+          'user_id':$user_id,
           'item_id':$item_id,
           'quantity':$quantity
+        },
+        success:function(data) {
+          $('.totalQuantity').text($totalQuantity);
+          $('.totalPrice').text($totalPrice);
+          console.log(data);
+        },
+        error:function() {
+          console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+          console.log("textStatus     : " + textStatus);
+          console.log("errorThrown    : " + errorThrown.message);
+          alert('失敗しました！');
         }
       });
-      .done((data) => {
-      });
-      .fail((data) => {
-
-      });
-      .always((data) => {
-        console.log($quantity);
-      });
     });
-    $('.totalQuantity').text($totalQuantity);
-    $('.totalPrice').text($totalPrice);
-    $('input[name="totalQuantity"]').val($totalQuantity);
-    $('input[name="totalPrice"]').val($totalPrice);
   });
 </script>
 @endsection

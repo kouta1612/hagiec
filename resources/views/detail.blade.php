@@ -13,7 +13,7 @@
     </div>
     <div class="col-4 offset-1">
       <h3 class="mb-3 pt-3">{{$item->name}}</h3>
-      <p>カテゴリ：{{$item->category}}</p>
+      <p>カテゴリ：{{$item_category_name}}</p>
       <p>原産国：{{$item->country}}</p>
       <p>商品説明：<br>{{$item->description}}</p>
     </div>

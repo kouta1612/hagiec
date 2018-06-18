@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Item;
@@ -14,6 +13,9 @@ use App\Payment;
 use App\Order;
 use App\OrderDetail;
 use Carbon\Carbon;
+use Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SampleNotification;
 
 class ItemsController extends Controller
 {
@@ -25,14 +27,16 @@ class ItemsController extends Controller
     public function top(Request $request) {
       $search_item_name = $request->search_item_name;
       $category_ids = $request->category;
+      $items = Item::where('stock_number', '<>', 0)->get();
       if(!empty($search_item_name) && isset($category_ids)) {
-        $items = Item::where('name', 'like', '%'.$search_item_name.'%')->whereIn('category_id', $category_ids)->get();
+        // $items->where('name', 'like', '%'.$search_item_name.'%')->whereIn('category_id', $category_ids)->get();
+        $items = Item::where('name', 'like', '%'.$search_item_name.'%')->whereIn('category_id', $category_ids)->where('stock_number', '<>', 0)->get();
       } else if(!empty($search_item_name)) {
-        $items = Item::where('name', 'like', '%'.$search_item_name.'%')->get();
+        // $items->where('name', 'like', '%'.$search_item_name.'%')->get();
+        $items = Item::where('name', 'like', '%'.$search_item_name.'%')->where('stock_number', '<>', 0)->get();
       } else if(isset($category_ids)) {
-        $items = Item::whereIn('category_id', $category_ids)->get();
-      } else {
-        $items = Item::all();
+        // $items->whereIn('category_id', $category_ids)->get();
+        $items = Item::whereIn('category_id', $category_ids)->where('stock_number', '<>', 0)->get();
       }
       $user_id = Auth::id();
       $categories = Category::all();
@@ -42,10 +46,15 @@ class ItemsController extends Controller
     public function showDetail($id) {
       $user_id = Auth::id();
       $item = Item::find($id);
-      return view('detail', ['user_id'=>$user_id, 'item' => $item]);
+      $item_category_name = Category::find($item->category_id)->name;
+      return view('detail', ['user_id'=>$user_id, 'item' => $item, 'item_category_name' => $item_category_name]);
     }
 
     public function detail(Request $request) {
+      // ログインしていなければログイン画面に遷移
+      if(!Auth::check()) {
+        return redirect()->to('/login');
+      }
       // あるユーザのカート情報を取得
       $user_id = $request->user_id;
       $item_id = $request->item_id;
@@ -82,6 +91,10 @@ class ItemsController extends Controller
     }
 
     public function cart(Request $request) {
+      // ログインしていなければログイン画面に遷移
+      if(!Auth::check()) {
+        return redirect()->to('/login');
+      }
       // あるユーザのカート情報を取得
       $user_id = $request->user_id;
       $item_id = $request->item_id;
@@ -110,8 +123,16 @@ class ItemsController extends Controller
         $cart['status'] = 1;
         $cart->save();
       }
-
       return redirect()->to("cart/{$user_id}");
+    }
+
+    public function ajax_cart(Request $request) {
+      $user_id = $request->user_id;
+      $item_id = $request->item_id;
+      $item = Cart::where('user_id', $user_id)->where('item_id', $item_id)->first();
+      $item->quantity = $request->quantity;
+      $item->save();
+      return $item;
     }
 
     public function destroy($item_id) {
@@ -178,6 +199,14 @@ class ItemsController extends Controller
     public function done_payment(Request $request) {
       $user_id = Auth::id();
 
+      $validator = Validator::make($request->all(), [
+        'delivery_date' => 'required|date_format:Y-m-d|after:now + 1day|',
+      ])->validate();
+      //tokunn checked
+      //if true 以下の処理を行う
+      //if false
+      //画面だけ表示 or TOP画面へ遷移
+
       // 注文テーブルの更新
       $order = new Order;
       $order['user_id'] = $user_id;
@@ -211,8 +240,13 @@ class ItemsController extends Controller
         $cart->quantity = 0;
         $cart->save();
       }
-
-      return view('done_payment');
+      $name = User::find($user_id)->first()->name;
+      $delivery_day = Order::where('user_id', $user_id)->orderBy('id', 'desc')->first()->delivery_day;
+      $delivery = Delivery::where('user_id', $user_id)->where('status', 1)->first();
+      $delivery_place = $delivery->state.$delivery->city.$delivery->street.$delivery->building;
+      $to = 'kouta1612world69@gmail.com';
+      Mail::to($to)->send(new SampleNotification($name, $delivery_day, $delivery_place));
+      return view('done_payment')->with('order_id', $order->id);
     }
 
 }

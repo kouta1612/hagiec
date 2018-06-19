@@ -48,3 +48,37 @@
   </div>
 </div>
 @endsection
+
+@section('jQuery')
+<script>
+$(function() {
+  $(':submit').click(function (event) {
+  var TIMEOUT = 10000;
+  var target  = event.target;
+  var $form   = $(target).closest('form');
+  var $submit = $form.find(':submit');
+
+  // clickしたsubmitの値をhiddenに保存
+  var $hidden = $('<input/>', {
+    type: 'hidden',
+    name: target.name,
+    value: target.value
+  }).appendTo($form);
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  // 全てのsubmitを無効化
+  $submit.prop('disabled', true);
+
+  // 時間経過でsubmitの無効化を解除
+  setTimeout(function () {
+    $hidden.remove();
+    $submit.prop('disabled', false);
+  }, TIMEOUT);
+
+  $form.submit();
+});
+});
+</script>
+@endsection

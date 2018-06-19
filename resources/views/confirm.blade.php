@@ -79,7 +79,6 @@
       </div>
       {{--支払いモーダル表示部分終了--}}
       <form class="form-group" action="/done_payment" method="post">
-        {{ csrf_field() }}
         <button id="done_payment" type="submit" class="btn btn-primary mb-5 mx-auto">注文確定</button>
     </div>
   </div>
@@ -110,7 +109,7 @@
         <strong>配送希望日</strong><br>
       </div>
         <div class="deliver-body form-group{{ $errors->has('delivery_date') ? 'has-error' : '' }}">
-          <input type="text" name="delivery_date" id="datepicker" value="{{old('delivery_date')}}" required autofocus>
+          <input type="text" name="delivery_date" id="datepicker" value="{{old('delivery_date')}}" required autocomplete="off">
           @if($errors->has('delivery_date'))
             <span class="form-text text-danger">
               <strong>{{ $errors->first('delivery_date') }}</strong>
@@ -162,6 +161,35 @@
 @section('jQuery')
 <script>
 $(function() {
+
+  // 確定ボタン押下時の処理
+  $(':submit').click(function(event) {
+    var TIMEOUT = 10000;
+    var target  = event.target;
+    var $form   = $(target).closest('form');
+    var $submit = $form.find(':submit');
+
+    // clickしたsubmitの値をhiddenに保存
+    var $hidden = $('<input/>', {
+      type: 'hidden',
+      name: target.name,
+      value: target.value
+    }).appendTo($form);
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    // 全てのsubmitを無効化
+    $submit.prop('disabled', true);
+
+    // 時間経過でsubmitの無効化を解除
+    setTimeout(function () {
+      $hidden.remove();
+      $submit.prop('disabled', false);
+    }, TIMEOUT);
+
+    $form.submit();
+  });
 
   // クレジットor現金引換ボタン押下時の処理振分け
   $('.submit').click(function() {

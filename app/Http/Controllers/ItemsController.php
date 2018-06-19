@@ -17,6 +17,7 @@ use Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SampleNotification;
 
+
 class ItemsController extends Controller
 {
     public function logout() {
@@ -25,17 +26,15 @@ class ItemsController extends Controller
     }
 
     public function top(Request $request) {
+      // dd($rsequest->session()->token());
       $search_item_name = $request->search_item_name;
       $category_ids = $request->category;
       $items = Item::where('stock_number', '<>', 0)->get();
       if(!empty($search_item_name) && isset($category_ids)) {
-        // $items->where('name', 'like', '%'.$search_item_name.'%')->whereIn('category_id', $category_ids)->get();
         $items = Item::where('name', 'like', '%'.$search_item_name.'%')->whereIn('category_id', $category_ids)->where('stock_number', '<>', 0)->get();
       } else if(!empty($search_item_name)) {
-        // $items->where('name', 'like', '%'.$search_item_name.'%')->get();
         $items = Item::where('name', 'like', '%'.$search_item_name.'%')->where('stock_number', '<>', 0)->get();
       } else if(isset($category_ids)) {
-        // $items->whereIn('category_id', $category_ids)->get();
         $items = Item::whereIn('category_id', $category_ids)->where('stock_number', '<>', 0)->get();
       }
       $user_id = Auth::id();
@@ -86,11 +85,15 @@ class ItemsController extends Controller
     }
 
     public function showCart($user_id) {
+      // var_dump($request->session()->token());
+      // 9ntEURDaoxTwE7w4hC7IWrZN3xo0iDYuchvDDleR
       $user = Auth::user();
       return view('cart')->with('user', $user);
     }
 
     public function cart(Request $request) {
+      // dd($request->session()->token());
+      var_dump($request->session()->token());
       // ログインしていなければログイン画面に遷移
       if(!Auth::check()) {
         return redirect()->to('/login');
@@ -185,6 +188,7 @@ class ItemsController extends Controller
       $delivery['building'] = $request->building;
       $delivery['tel'] = $request->tel;
       $delivery->save();
+      $request->session()->regenerateToken();
       return redirect()->to('/confirm/{$user_id}');
     }
 
@@ -197,6 +201,19 @@ class ItemsController extends Controller
     }
 
     public function done_payment(Request $request) {
+      // dd($request->session()->token());
+      // dd($request->_token);
+      // dd($request);
+      // dd($request->session()->regenerateToken());
+      if(!$request->session()->token() == $request->_token) {
+        // dd($request->session()->token());
+        // dd($request->_token);
+        return redirect('/top');
+      }
+
+      // var_dump($request->_token);
+      $request->session()->regenerateToken();
+
       $user_id = Auth::id();
 
       $validator = Validator::make($request->all(), [
@@ -246,7 +263,7 @@ class ItemsController extends Controller
       $delivery_place = $delivery->state.$delivery->city.$delivery->street.$delivery->building;
       $to = 'kouta1612world69@gmail.com';
       Mail::to($to)->send(new SampleNotification($name, $delivery_day, $delivery_place));
+      $request->session()->regenerateToken();
       return view('done_payment')->with('order_id', $order->id);
     }
-
 }

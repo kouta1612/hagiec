@@ -34,7 +34,7 @@ class SampleNotification extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.sample_notification')
+        return $this->view('emails.email')
                     ->subject($this->title)
                     ->with([
                       'delivery_day' => $this->delivery_day,

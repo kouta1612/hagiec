@@ -83,7 +83,7 @@ class RegisterController extends Controller
 
       Payment::create([
         'user_id' => $user_id,
-        'payment_status' => 0
+        'status' => 0
       ]);
 
       return User::create([
@@ -91,7 +91,6 @@ class RegisterController extends Controller
         'email' => $data['email'],
         'password' => bcrypt($data['password']),
         'tel' => $data['tel'],
-        'payment_status' => 0
       ]);
 
     }

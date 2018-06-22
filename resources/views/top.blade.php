@@ -32,7 +32,7 @@
               <p class="card-text">¥{{$item->price}}</p>
               <form class="form-group" action="/cart" method="post">
                 {{ csrf_field() }}
-                <a href="/detail/{{$item->id}}" class="btn btn-primary">詳細</a>
+                <a href="/detail" class="btn btn-primary">詳細</a>
                 <input type="hidden" name="user_id" value="{{$user_id}}">
                 <input type="hidden" name="item_id" value="{{$item->id}}">
                 <button class="btn btn-primary" type="submit">カートに追加</button>
@@ -53,32 +53,32 @@
 <script>
 $(function() {
   $(':submit').click(function (event) {
-  var TIMEOUT = 10000;
-  var target  = event.target;
-  var $form   = $(target).closest('form');
-  var $submit = $form.find(':submit');
+    var TIMEOUT = 10000;
+    var target  = event.target;
+    var $form   = $(target).closest('form');
+    var $submit = $form.find(':submit');
 
-  // clickしたsubmitの値をhiddenに保存
-  var $hidden = $('<input/>', {
-    type: 'hidden',
-    name: target.name,
-    value: target.value
-  }).appendTo($form);
+    // clickしたsubmitの値をhiddenに保存
+    var $hidden = $('<input/>', {
+      type: 'hidden',
+      name: target.name,
+      value: target.value
+    }).appendTo($form);
 
-  event.preventDefault();
-  event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
 
-  // 全てのsubmitを無効化
-  $submit.prop('disabled', true);
+    // 全てのsubmitを無効化
+    $submit.prop('disabled', true);
 
-  // 時間経過でsubmitの無効化を解除
-  setTimeout(function () {
-    $hidden.remove();
-    $submit.prop('disabled', false);
-  }, TIMEOUT);
+    // 時間経過でsubmitの無効化を解除
+    setTimeout(function () {
+      $hidden.remove();
+      $submit.prop('disabled', false);
+    }, TIMEOUT);
 
-  $form.submit();
-});
+    $form.submit();
+  });
 });
 </script>
 @endsection

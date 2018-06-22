@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     protected $fillable = [
-      'user_id', 'payment_status'
+      'user_id', 'status'
     ];
 
-
+    public function user() {
+      return $this->belongTo('App\User');
+    }
 
 }

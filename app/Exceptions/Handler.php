@@ -49,10 +49,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        // if($exception instanceof TokenMismatchException) {
-        //   dd(23496);
-        //   return redirect('/top');
-        // }
+        if($exception instanceof TokenMismatchException) {
+          return redirect('/top');
+        }
         return parent::render($request, $exception);
     }
 }

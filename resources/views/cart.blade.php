@@ -11,31 +11,31 @@
   </div>
   <div class="row" id="cartItems">
     <div class="col-8">
-      @if(count($user->carts()) == 0)
+      @if(count($carts) == 0)
       <h3>現在商品がありません</h3>
       @else
-      @foreach($user->carts() as $cart)
-      <div class="row border-top border-muted py-3 mb-3 cartItem" id="{{$cart->item()->id}}">
+      @foreach($carts as $cart)
+      <div class="row border-top border-muted py-3 mb-3 cartItem" id="{{$cart->item->id}}">
         <div class="col-2 d-flex align-items-center">
           <div class="card">
-              <img class="card-img-top" src="{{$cart->item()->image_url}}" alt="Card image cap">
+              <img class="card-img-top" src="{{$cart->item->image_url}}" alt="Card image cap">
           </div>
         </div>
         <div class="col-5">
-          <p><a href="/detail/{{$cart->item()->id}}">{{$cart->item()->name}}</a></p>
-          <p>残り {{$cart->item()->stock_number}}点</p>
-          <form class="form-group" action="/destroy/{{$cart->item()->id}}" id="form_{{$cart->item()->id}}" method="post">
+          <p><a href="/detail">{{$cart->item->name}}</a></p>
+          <p>残り {{$cart->item->stock_number}}点</p>
+          <form class="form-group" action="/destroy/{{$cart->item->id}}" id="form_{{$cart->item->id}}" method="post">
             {{ csrf_field() }}
             {{ method_field('delete') }}
-            <button data-id="{{$cart->item()->id}}" class="btn btn-danger" type="submit" onclick="delete(this);">削除</button>
+            <button data-id="{{$cart->item->id}}" class="btn btn-danger" type="submit" onclick="delete(this);">削除</button>
           </form>
         </div>
         <div class="col-3">
-          <h3>¥<span class="itemPrice">{{$cart->item()->price}}</span></h3>
+          <h3>¥<span class="itemPrice">{{$cart->item->price}}</span></h3>
         </div>
         <div class="col-2">
           <select class="form-control" name="number">
-            @for($i = 0; $i < $cart->item()->stock_number; $i++)
+            @for($i = 0; $i < $cart->item->stock_number; $i++)
               @if($i + 1 == $cart->quantity)
                 <option value="{{$i + 1}}" selected="selected">{{$i + 1}}</option>
               @else
@@ -49,7 +49,7 @@
       @endif
     </div>
 
-    @if(count($user->carts()) > 0)
+    @if(count($carts) > 0)
     <div class="offset-1 col-3 border border-muted pt-4 bg-light cart_side">
       <div class="row mb-3">
         <div class="col">
@@ -58,7 +58,7 @@
       </div>
       <div class="row">
         <div class="col text-center">
-          <form class="form-group" action="/confirm/{$user->id}" method="get">
+          <form class="form-group" action="/confirm" method="get">
             {{ csrf_field() }}
             <input type="hidden" name="totalQuantity">
             <input type="hidden" name="totalPrice">
@@ -77,9 +77,9 @@
   // ページ起動時の値
   $(function() {
     $.ajaxSetup({
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
     $totalQuantity = 0;
     $totalPrice = 0;
@@ -110,21 +110,20 @@
         type:'POST',
         url:'/ajax_cart',
         data:{
-          'user_id':$user_id,
-          'item_id':$item_id,
-          'quantity':$quantity
+          "user_id":$user_id,
+          "item_id":$item_id,
+          "quantity":$quantity,
         },
         success:function(data) {
           $('.totalQuantity').text($totalQuantity);
           $('.totalPrice').text($totalPrice);
           console.log(data);
         },
-        error:function() {
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
           console.log("XMLHttpRequest : " + XMLHttpRequest.status);
           console.log("textStatus     : " + textStatus);
           console.log("errorThrown    : " + errorThrown.message);
-          alert('失敗しました！');
-        }
+        },
       });
     });
   });

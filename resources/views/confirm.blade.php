@@ -18,7 +18,7 @@
             </div>
             <div class="modal-body">
               <div class="container-fluid">
-                @foreach($user->addresses() as $address)
+                @foreach($addresses as $address)
                 @if($loop->index % 3 == 0)
                 <div class="row mb-3">
                 @endif
@@ -79,6 +79,7 @@
       </div>
       {{--支払いモーダル表示部分終了--}}
       <form class="form-group" action="/done_payment" method="post">
+        {{ csrf_field() }}
         <button id="done_payment" type="submit" class="btn btn-primary mb-5 mx-auto">注文確定</button>
     </div>
   </div>
@@ -93,12 +94,12 @@
       {{--確認画面でのお届け先住所--}}
       <div class="address-body">
         <ul>
-          <li>{{$user->selected_address()->name}}</li>
-          <li>{{$user->selected_address()->postal_code}}</li>
-          <li>{{$user->selected_address()->state}} {{$user->selected_address()->city}}{{$user->selected_address()->street}}</li>
-          <li>{{$user->selected_address()->building}}</li>
-          <li>電話番号: {{$user->selected_address()->tel}}</li>
-          <li><input type="hidden" name="delivery_id" value="{{$user->selected_address()->id}}"></li>
+          <li>{{$selected_address->name}}</li>
+          <li>{{$selected_address->postal_code}}</li>
+          <li>{{$selected_address->state}} {{$selected_address->city}}{{$selected_address->street}}</li>
+          <li>{{$selected_address->building}}</li>
+          <li>電話番号: {{$selected_address->tel}}</li>
+          <li><input type="hidden" name="delivery_id" value="{{$selected_address->id}}"></li>
         </ul>
       </div>
     </div>
@@ -125,10 +126,10 @@
         <a href="" data-toggle="modal" data-target="#exampleModal">変更</a>
       </div>
       <div class="payment-body">
-        @if($user->payment_status()->payment_status == 0)
-        現金引換
-        <input type="hidden" name="payment" value="現金引換">
-        @elseif($user->payment_status()->payment_status == 1)
+        @if($user->payment->status == 0)
+        代金引換
+        <input type="hidden" name="payment" value="代金引換">
+        @elseif($user->payment->status == 1)
         クレジットカード
         <input type="hidden" name="payment" value="クレジットカード">
         @endif
@@ -144,11 +145,11 @@
         <table class="table table-bordered">
           <tr>
             <th>商品数</th>
-            <td>{{$user->totalQuantity()}}点</td>
+            <td>{{$totalQuantity}}点</td>
           </tr>
           <tr>
             <th>小計</th>
-            <td>¥{{$user->totalPrice()}}</td>
+            <td>¥{{$totalPrice}}</td>
           </tr>
         </table>
       </div>

@@ -32,7 +32,7 @@
         @else
           <li class="nav-item"><a class="nav-link" href="/login">ログイン</a></li>
         @endif
-          <li class="nav-item"><a class="nav-link" href="/cart/{{Auth::id()}}">カート</a></li>
+          <li class="nav-item"><a class="nav-link" href="/cart">カート</a></li>
       </ul>
     </div>
   </nav>

@@ -20,7 +20,6 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">Email</label>
 
@@ -34,7 +33,6 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
@@ -48,7 +46,6 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
@@ -56,7 +53,6 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
-
                         <div class="form-group{{ $errors->has('tel') ? ' has-error' : '' }}">
                             <label for="tel" class="col-md-4 control-label">TEL</label>
 
@@ -66,6 +62,19 @@
                                 @if ($errors->has('tel'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('tel') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('postal_code') ? ' has-error' : '' }}">
+                            <label for="postal_code" class="col-md-4 control-label">Postal Code</label>
+
+                            <div class="col-md-6">
+                                <input id="postal_code" type="text" class="form-control" name="postal_code" value="{{ old('postal_code') }}" required>
+
+                                @if ($errors->has('postal_code'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('postal_code') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -118,19 +127,6 @@
                                 @if ($errors->has('building'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('building') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group{{ $errors->has('postal_code') ? ' has-error' : '' }}">
-                            <label for="postal_code" class="col-md-4 control-label">Postal Code</label>
-
-                            <div class="col-md-6">
-                                <input id="postal_code" type="text" class="form-control" name="postal_code" value="{{ old('postal_code') }}" required>
-
-                                @if ($errors->has('postal_code'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('postal_code') }}</strong>
                                     </span>
                                 @endif
                             </div>

@@ -15,8 +15,12 @@ class Item extends Model
     return $this->belongsToMany('App\User', 'carts')->withPivot('quantity', 'status')->withTimestamps();
   }
 
+  public function category() {
+    return $this->belongsTo('App\Category');
+  }
 
-  // public function cart() {
-  //   return $this->belongsTo('App\Cart');
-  // }
+  public function order_details() {
+    return $this->hasMany('App\Order_detail');
+  }
+
 }

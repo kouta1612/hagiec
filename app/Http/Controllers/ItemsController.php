@@ -44,10 +44,10 @@ class ItemsController extends Controller
       return view('top', ['user_id' => $user_id, 'items' => $items, 'categories' => $categories, 'category_ids' => $category_ids, 'search_item_name' => $search_item_name]);
     }
 
-    public function showDetail() {
+    public function showDetail($item_id) {
       $user_id = Auth::id();
-      $item = Item::find($user_id);
-      $item_category_name = Category::find($item->category_id)->name;
+      $item = Item::find($item_id);
+      $item_category_name = $item->category->name;
       return view('detail', ['user_id'=>$user_id, 'item' => $item, 'item_category_name' => $item_category_name]);
     }
 
@@ -87,12 +87,13 @@ class ItemsController extends Controller
     }
 
     public function showCart() {
-      $user_id = Auth::id();
-      $user = User::find($user_id);
-      $carts = $user->carts->where('quantity', '<>', 0);
+      $user = Auth::user();
+      $carts = $user->carts->where('status', '==', 1);
+      $cart_in_items = $user->cart_in_items;
       return view('cart')->with([
         'user' => $user,
         'carts' => $carts,
+        'cart_in_items' => $cart_in_items,
       ]);
     }
 
@@ -151,31 +152,24 @@ class ItemsController extends Controller
     public function confirm(Request $request) {
       $user = Auth::user();
       $addresses = $user->deliveries->where('user_id', $user->id);
-      // dd($addresses);
-      // dd($user->id);
       $selected_address = $addresses->where('user_id', $user->id)->where('status', 1)->first();
-      // $user_cart = Cart::where('user_id', $user->id)->get()->item;
-      // dd($user_cart);
       $totalQuantity = 0;
       $totalPrice = 0;
-      // foreach($cart_in_items as $cart_in_item) {
-      //
-      // }
-      foreach($user->carts as $cart) {
-        $totalQuantity += $cart->quantity;
-      }
-      $totalPrice = 0;
-      foreach($user->carts as $cart) {
-        $itemPrice = $cart->item->price;
-        $totalPrice += $itemPrice * $cart->quantity;
+      // カート内商品数と小計を計算
+      foreach($user->cart_in_items as $cart_in_item) {
+        $totalQuantity += $cart_in_item->pivot->quantity;
+        $itemPrice = $cart_in_item->price;
+        $quantity = $cart_in_item->pivot->quantity;
+        $totalPrice += $itemPrice * $quantity;
       }
       $payment_status = $request->payment_status;
-      return view('confirm')->with(['user'=>$user, 'totalQuantity'=>$totalQuantity, 'totalPrice'=>$totalPrice, 'payment_status'=>$payment_status, 'addresses' => $addresses, 'selected_address' => $selected_address]);
+      return view('confirm')->with(['user'=>$user, 'addresses' => $addresses, 'selected_address' => $selected_address, 'totalQuantity'=>$totalQuantity, 'totalPrice'=>$totalPrice, 'payment_status'=>$payment_status]);
     }
 
     public function select_address(Request $request) {
       $id = $request->id;
-      $addresses = Delivery::all();
+      $user_id = Auth::id();
+      $addresses = Delivery::all()->where('user_id', $user_id);
       $selected_address = Delivery::find($id);
       foreach($addresses as $address) {
         if($address->status == 1) {
@@ -222,10 +216,18 @@ class ItemsController extends Controller
 
     public function done_payment(Request $request) {
 
+
+      // $order = Order::find(1);
+      // dd($order->order_details);
+
       $request->session()->regenerateToken();
 
-      $user = Auth::user();
+      // $order = $user->orders();
+      // dd($order);
+      // $order->order_details->createMany($order_detail_arrays);
 
+
+      $user = Auth::user();
       $validator = Validator::make($request->all(), [
         'delivery_date' => 'required|date_format:Y-m-d|after:now + 1day|',
       ])->validate();
@@ -240,30 +242,52 @@ class ItemsController extends Controller
       $order->save();
 
       // 注文明細テーブルと商品テーブルとカートテーブルの登録
-      $carts = $user->carts->where('status', '<>', 0);
-      foreach($carts as $cart) {
-        $order_detail = new OrderDetail;
-        $order_detail['order_id'] = Order::orderBy('id', 'desc')->first()->id;
-        $order_detail['item_id'] = $cart->item_id;
-        $order_detail['payment_number'] = $cart->quantity;
-        $order_detail['price'] = Item::where('id', $cart->item_id)->first()->price;
-        $order_detail->save();
+      $carts = $user->carts()->where('status', '<>', 0);
+      $order = $user->orders()->latest()->first();
+      $order_detail_arrays = array();
+      $cart_arrays = array();
+      foreach($carts->get() as $cart) {
+        $order_detail_arrays[] = array(
+          'order_id' => $order->id,
+          'item_id' => $cart->item_id,
+          'payment_number' => $cart->quantity,
+          'price' => $cart->item->price,
+          'created_at' => new Carbon(),
+          'updated_at' => new Carbon(),
+        );
+        $cart_arrays[] = $cart;
+        // $order_detail = new OrderDetail;
+        // $order_detail['order_id'] = $order_id;
+        // $order_detail['item_id'] = $cart->item_id;
+        // $order_detail['payment_number'] = $cart->quantity;
+        // $order_detail['price'] = $cart->item->price;
+        // $order_detail->save();
 
         // 商品在庫数からカート内商品購入数を引いて更新
-        $item = Item::where('id', $cart->item_id)->first();
+        $item = $cart->item;
         $item->stock_number -= $cart->quantity;
         $item->save();
 
         // カートテーブル更新
-        $cart->status = 0;
-        $cart->quantity = 0;
-        $cart->done_order_date = $request->delivery_date;
-        $cart->save();
+        // $cart->status = 0;
+        // $cart->quantity = 0;
+        // $cart->done_order_date = $request->delivery_date;
+        // $cart->save();
       }
+      // dd($order_detail_arrays);
+      // $order = $user->orders()->latest()->first();
+      $order->order_details()->insert($order_detail_arrays);
 
+      foreach($cart_arrays as $cart_array) {
+        $cart_array->status = 0;
+        $cart_array->quantity = 0;
+        $cart_array->done_order_date = $request->delivery_date;
+      }
+      $carts->update($cart_arrays);
       // メール送信
-      $delivery_day = Order::where('user_id', $user->id)->orderBy('id', 'desc')->first()->delivery_day;
-      $delivery = Delivery::where('user_id', $user->id)->where('status', 1)->first();
+      // $delivery_day = $user->orders->last()->delivery_day;
+      $delivery_day = $order->delivery_day;
+      $delivery = $user->deliveries->where('status', '==', 1)->first();
       $delivery_place = $delivery->state.$delivery->city.$delivery->street.$delivery->building;
       $to = 'kouta1612world69@gmail.com';
       Mail::to($to)->send(new SampleNotification($user->name, $delivery_day, $delivery_place));

@@ -24,7 +24,7 @@
                 @endif
                   <div class="col-4">
                     <div class="address-body">
-                      <form class="form-group" method="post" action="/confirm">
+                      <form class="form-group" method="post" action="/select_address">
                         {{ csrf_field() }}
                         <ul>
                           <li class="mb-1"><strong>{{$address->name}}</strong></li>

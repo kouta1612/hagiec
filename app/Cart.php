@@ -12,21 +12,8 @@ class Cart extends Model
       return $this->belongsTo('App\User');
     }
 
-    // public function item() {
-    //   return $this->belongsTo('App\Item','item_id', 'id');
-    // }
-
     public function item() {
      return $this->belongsTo('App\Item');
    }
-
-    // public function items() {
-    //   return $this->hasOne('App\Item');
-    // }
-
-    // public function item() {
-    //   $item = Item::where('id', $this->item_id)->first();
-    //   return $item;
-    // }
 
 }

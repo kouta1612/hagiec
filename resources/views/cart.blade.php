@@ -14,29 +14,30 @@
       @if(count($carts) == 0)
       <h3>現在商品がありません</h3>
       @else
-      @foreach($carts as $cart)
-      <div class="row border-top border-muted py-3 mb-3 cartItem" id="{{$cart->item->id}}">
+      @foreach($cart_in_items as $cart_in_item)
+      @if($cart_in_item->pivot->status == 1)
+      <div class="row border-top border-muted py-3 mb-3 cartItem" id="{{$cart_in_item->id}}">
         <div class="col-2 d-flex align-items-center">
           <div class="card">
-              <img class="card-img-top" src="{{$cart->item->image_url}}" alt="Card image cap">
+              <img class="card-img-top" src="{{$cart_in_item->image_url}}" alt="Card image cap">
           </div>
         </div>
         <div class="col-5">
-          <p><a href="/detail">{{$cart->item->name}}</a></p>
-          <p>残り {{$cart->item->stock_number}}点</p>
-          <form class="form-group" action="/destroy/{{$cart->item->id}}" id="form_{{$cart->item->id}}" method="post">
+          <p><a href="/detail">{{$cart_in_item->name}}</a></p>
+          <p>残り {{$cart_in_item->stock_number}}点</p>
+          <form class="form-group" action="/destroy/{{$cart_in_item->id}}" id="form_{{$cart_in_item->id}}" method="post">
             {{ csrf_field() }}
             {{ method_field('delete') }}
-            <button data-id="{{$cart->item->id}}" class="btn btn-danger" type="submit" onclick="delete(this);">削除</button>
+            <button data-id="{{$cart_in_item->id}}" class="btn btn-danger" type="submit" onclick="delete(this);">削除</button>
           </form>
         </div>
         <div class="col-3">
-          <h3>¥<span class="itemPrice">{{$cart->item->price}}</span></h3>
+          <h3>¥<span class="itemPrice">{{$cart_in_item->price}}</span></h3>
         </div>
         <div class="col-2">
           <select class="form-control" name="number">
-            @for($i = 0; $i < $cart->item->stock_number; $i++)
-              @if($i + 1 == $cart->quantity)
+            @for($i = 0; $i < $cart_in_item->stock_number; $i++)
+              @if($i + 1 == $cart_in_item->pivot->quantity)
                 <option value="{{$i + 1}}" selected="selected">{{$i + 1}}</option>
               @else
                 <option value="{{$i + 1}}">{{$i + 1}}</option>
@@ -45,6 +46,7 @@
           </select>
         </div>
       </div>
+      @endif
       @endforeach
       @endif
     </div>

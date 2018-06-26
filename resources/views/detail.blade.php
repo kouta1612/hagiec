@@ -19,7 +19,7 @@
     </div>
     <div class="col-3 offset-1 pt-3">
       <h3 class="mb-5">¥{{$item->price}}</h3>
-      <form class="form-group" action="/detail" method="post">
+      <form class="form-group" action="/cart" method="post">
         {{ csrf_field() }}
         <input type="hidden" name="user_id" value="{{$user_id}}">
         <input type="hidden" name="item_id" value="{{$item->id}}">

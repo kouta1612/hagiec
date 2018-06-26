@@ -19,7 +19,6 @@ class CreateCartsTable extends Migration
             $table->unsignedInteger('item_id');
             $table->unsignedInteger('quantity');
             $table->unsignedInteger('status');
-            $table->timestamp('done_order_date')->nullable();
             $table->timestamps();
         });
     }

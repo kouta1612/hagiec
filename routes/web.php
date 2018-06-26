@@ -18,7 +18,6 @@ Route::get('/logout', 'ItemsController@logout');
 Route::get('/top', 'ItemsController@top');
 Route::post('/top', 'ItemsController@top');
 Route::get('/detail/{item_id}', 'ItemsController@showDetail');
-Route::post('/detail', 'ItemsController@detail');
 Route::get('/cart', 'ItemsController@showCart');
 Route::post('/cart', 'ItemsController@cart');
 Route::post('/ajax_cart', 'ItemsController@ajax_cart');

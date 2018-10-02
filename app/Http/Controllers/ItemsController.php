@@ -75,7 +75,7 @@ class ItemsController extends Controller
     public function cart(Request $request) {
       // ログインしていなければログイン画面に遷移
       if(!Auth::check()) {
-        return redirect()->to('/login');
+        return redirect('/login');
       }
       // あるユーザのカート情報を取得
       $user_id = $request->user_id;
@@ -105,7 +105,7 @@ class ItemsController extends Controller
         $cart['status'] = 1;
         $cart->save();
       }
-      return redirect()->to("/cart");
+      return redirect('/cart');
     }
 
     public function ajax_cart(Request $request) {
@@ -121,7 +121,7 @@ class ItemsController extends Controller
       $user_id = Auth::id();
       $deleteItem = Cart::where('user_id', $user_id)->where('item_id', $item_id)->first();
       $deleteItem->delete();
-      return redirect()->to("/cart");
+      return redirect('/cart');
     }
 
     public function confirm(Request $request) {
@@ -164,7 +164,7 @@ class ItemsController extends Controller
           }
         }
       }
-      return redirect()->to("/confirm");
+      return redirect('/confirm');
     }
 
     public function show_address_form() {
@@ -185,7 +185,7 @@ class ItemsController extends Controller
       $delivery['tel'] = $request->tel;
       $delivery->save();
       $request->session()->regenerateToken();
-      return redirect()->to('/confirm');
+      return redirect('/confirm');
     }
 
     public function payment($status) {
@@ -193,7 +193,7 @@ class ItemsController extends Controller
       $payment = Payment::all()->where('user_id', $user_id)->first();
       $payment->status = $status;
       $payment->save();
-      return redirect()->to("/confirm");
+      return redirect('/confirm');
     }
 
     public function done_payment(Request $request) {

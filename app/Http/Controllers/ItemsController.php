@@ -255,7 +255,6 @@ class ItemsController extends Controller
       $delivery_place = $delivery->state.$delivery->city.$delivery->street.$delivery->building;
       $to = 'kouta1612world69@gmail.com';
       Mail::to($to)->send(new SampleNotification($user->name, $delivery_day, $delivery_place));
-
       return view('done_payment')->with('order_id', $order->id);
     }
 

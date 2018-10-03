@@ -39,8 +39,38 @@
 ・勤怠システムの帰るボタンを押す
 ・日報作成で今日の分を作成する
 ・勤怠システムの個人実績から時間を修正する
+・合計金額はSQLで計算して出していいし、Controllerでループ回して出して良いが、多分SQLの方が効率が良いからSQLでやる
 
 まずは画面と機能を一通り作って、最終的にBootstrapでデザインする。
+
+・送信ボタン
+・自分自身のURLに送るようにする
+・注文明細の横に明細の金額を書くようにする
+・テーブルにする
+
+仮の売上一覧画面でのSQL
+select sum(item.price)
+from orders order
+inner join order_details detail
+on order.id = detail.order_id
+inner join items item
+on detail.item_id = item.id
+where DATA_FORMAT(order.order_time, '%Y%m') = 2018-10 {画面で指定したyyyy-mm形式の年月}
+group by order.id
+
+DB::table('orders)
+    ->select(sum(items.price))
+    ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+    ->join('items', 'order_details.item_id', '=', 'items.id')
+    ->where(DB::raw('DATE_FORMAT(orders.order_time, '%Y%m') = {画面で指定したyyyy-mm形式の年月}'))
+    ->groupBy('orders.id');
+
+気づき
+・一回の注文で複数の商品を注文した場合、明細がその種類数分だけ作られる
+・明細単位でまず合計する
+・明細単位を合計して売上高を計算する
+・$date = new Carbon()は本日の日時を取得
+・date_format($date, 'Y-m')でyyyy-mm形式の日付を取得
 
 
 sudo php artisan serve --host=0.0.0.0 --port=80  // PHPサーバ立ち上げ

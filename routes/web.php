@@ -11,7 +11,12 @@
 |
 */
 
+/** 管理者 */
+Route::get('/admin/index', 'AdminController@index');
+Route::get('/admin/earnings', 'AdminController@show_earning');
 
+
+/** 一般ユーザ */
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::redirect('/', '/login', 301);

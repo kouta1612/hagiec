@@ -22,7 +22,9 @@
             @foreach ($orders_in_month as $order)
                 <tr>
                     <td>{{$order->id}}</td>
+                    {{--<td>1</td>--}}
                     <td><a href="/admin/earning/{{$order->id}}">注文明細</a></td>
+                    {{--<td>2</td>--}}
                     {{--<td>{{$order->total}}</td>--}}
                 </tr> 
             @endforeach

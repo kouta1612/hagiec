@@ -36,7 +36,6 @@
 
 ・注文確定処理
 ・商品売上一覧（日付を入力して、その日付に注文された商品を一覧表示する）
-・勤怠システムの帰るボタンを押す
 ・日報作成で今日の分を作成する
 ・勤怠システムの個人実績から時間を修正する
 ・合計金額はSQLで計算して出していいし、Controllerでループ回して出して良いが、多分SQLの方が効率が良いからSQLでやる
@@ -48,15 +47,15 @@
 ・注文明細の横に明細の金額を書くようにする
 ・テーブルにする
 
-仮の売上一覧画面でのSQL
-select sum(item.price)
-from orders order
-inner join order_details detail
-on order.id = detail.order_id
-inner join items item
-on detail.item_id = item.id
-where DATA_FORMAT(order.order_time, '%Y%m') = 2018-10 {画面で指定したyyyy-mm形式の年月}
-group by order.id
+仮の売上一覧画面でのSQL  {画面で指定したyyyy-mm形式の年月}
+select sum(items.price)
+from orders
+join order_details
+on orders.id = order_details.order_id
+join items
+on order_details.item_id = items.id
+where DATE_FORMAT(orders.order_time, '%Y-%m') = '2018-10'
+group by orders.id;
 
 DB::table('orders)
     ->select(sum(items.price))
@@ -71,6 +70,8 @@ DB::table('orders)
 ・明細単位を合計して売上高を計算する
 ・$date = new Carbon()は本日の日時を取得
 ・date_format($date, 'Y-m')でyyyy-mm形式の日付を取得
+・getのリクエストを送るにはhiddenで埋め込んだものをgetで送る
+・postのリクエストを送るにはfromのnameに埋め込んだものをpostで送る
 
 
 sudo php artisan serve --host=0.0.0.0 --port=80  // PHPサーバ立ち上げ

@@ -5,7 +5,7 @@
 @section('content')
 <div>
     <form action="/admin/earnings" method="get">
-        <p><input type="month" name="month" value="2018-10">の売上合計金額 円</p>
+        <p><input type="month" name="month" value="{{$selected_year}}-{{$selected_month}}">の売上合計金額 円</p>
         <input type="submit" value="送信">
     </form>
 </div>
@@ -15,17 +15,15 @@
             <tr>
                 <th>注文番号</th>
                 <th>リンク</th>
-                {{--<th>注文金額</th>--}}
+                <th>注文金額</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($orders_in_month as $order)
                 <tr>
                     <td>{{$order->id}}</td>
-                    {{--<td>1</td>--}}
                     <td><a href="/admin/earning/{{$order->id}}">注文明細</a></td>
-                    {{--<td>2</td>--}}
-                    {{--<td>{{$order->total}}</td>--}}
+                    <td>{{$order->price}}</td>
                 </tr> 
             @endforeach
         </tbody>

@@ -15,9 +15,9 @@ class AdminController extends Controller
         return view('/admin/index');
     }
 
+    /* 月別の商品をすべて取得 */
     public function show_earning(Request $request) {
 
-        /* 月別の商品をすべて取得 */
         $today = new Carbon(date_format(new Carbon(), 'Y-m'));
         $year = date_format($today, 'Y');
         $month = date_format($today, 'm');
@@ -43,7 +43,13 @@ class AdminController extends Controller
                 ->groupBy('orders.id')
                 ->get();
         }
-        return view('/admin/earnings', compact('selected_year', 'selected_month', 'orders_in_month'));
+
+        $total_price = 0;
+        foreach ($orders_in_month as $order_in_month) {
+            $total_price += $order_in_month->price;
+        }
+
+        return view('/admin/earnings', compact('selected_year', 'selected_month', 'total_price', 'orders_in_month'));
     }
 
 }

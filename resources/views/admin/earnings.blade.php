@@ -5,7 +5,7 @@
 @section('content')
 <div>
     <form action="/admin/earnings" method="get">
-        <p><input type="month" name="month" value="{{$selected_year}}-{{$selected_month}}">の売上合計金額 円</p>
+        <p><input type="month" name="month" value="{{$selected_year}}-{{$selected_month}}">の売上合計金額 {{$total_price}}円</p>
         <input type="submit" value="送信">
     </form>
 </div>

@@ -76,7 +76,8 @@ DB::table('orders)
 やること(10/4)
 ・明細金額を表示
 ・日付の保持
-
+・売上画面でのCSV保存
+・詳細ページに遷移
 
 sudo php artisan serve --host=0.0.0.0 --port=80  // PHPサーバ立ち上げ
 php artisan migrate                              // マイグレーション実行

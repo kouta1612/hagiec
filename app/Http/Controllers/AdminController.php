@@ -29,7 +29,6 @@ class AdminController extends Controller
         foreach ($orders_in_month as $order_in_month) {
             $total_price += $order_in_month->price;
         }
-
         if(isset($_GET["csv"])) {
             $csv = $this->csv_format($orders_in_month, $total_price);
             $csv = mb_convert_encoding($csv, 'SJIS-win', 'UTF-8');
@@ -90,7 +89,20 @@ class AdminController extends Controller
     }
 
     public function show_earning_detail($id) {
-        return view();
+        $earning_detail_datas = DB::table('orders')
+            ->select(DB::raw(
+                'order_details.id as id, 
+                items.name as name, 
+                order_details.price as price, 
+                order_details.payment_number as number, 
+                order_details.price * order_details.payment_number as total_price'
+            ))
+            ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+            ->join('items', 'items.id', '=', 'order_details.item_id')
+            ->where('orders.id', '=', $id)
+            ->get();
+
+        return view('/admin/earning_detail', compact('earning_detail_datas'));
     }
 
 }

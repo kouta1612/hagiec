@@ -217,7 +217,7 @@ class ItemsController extends Controller
       $order->save();
 
       // 注文明細テーブルと商品テーブルとカートテーブルの登録・更新準備
-      $carts = $user->carts()->where('status', '<>', 0);
+      $carts = $user->carts()->where('status', '<>', 0)->get;
       $cart_in_items = $user->cart_in_items;
       $order = $user->orders()->latest()->first();
       $order_detail_arrays = array();

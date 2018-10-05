@@ -4,6 +4,9 @@
 
 @section('content')
 <div>
+
+    <h3>月別売上</h3>
+
     <form action="/admin/earnings" method="get">
         <p><input type="month" name="month" value="{{$selected_year}}-{{$selected_month}}">の売上合計金額 {{$total_price}}円</p>
         <input type="submit" name="earning" value="送信">

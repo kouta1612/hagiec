@@ -38,21 +38,6 @@ class AdminController extends Controller
         return view('/admin/earnings', compact('selected_year', 'selected_month', 'total_price', 'orders_in_month'));
     }
 
-    /** CSV出力するデータの格納 */
-    public function csv_format($orders_in_month, $total_price) {
-        $row = [];
-        $row[] = array('注文番号', '注文金額', '合計金額');
-        foreach ($orders_in_month as $id => $order) {
-            if ($id == 0) {
-                $col = [$order->id, $order->price, $total_price];
-            } else {
-                $col = [$order->id, $order->price];
-            }
-            $row[] = $col;
-        }
-        return $row;
-    }
-
     /** 選択した日付の注文番号と合計金額を取得 */
     public function select_earning_data($selected_day) {
 
@@ -71,6 +56,21 @@ class AdminController extends Controller
         return $orders_in_month;
     }
 
+    /** CSV出力するデータの格納 */
+    public function csv_format($orders_in_month, $total_price) {
+        $row = [];
+        $row[] = array('注文番号', '注文金額', '合計金額');
+        foreach ($orders_in_month as $id => $order) {
+            if ($id == 0) {
+                $col = [$order->id, $order->price, $total_price];
+            } else {
+                $col = [$order->id, $order->price];
+            }
+            $row[] = $col;
+        }
+        return $row;
+    }
+
     /** CSVダウンロード */
     public function downloadCSV($csv) {
         return new StreamedResponse(
@@ -87,6 +87,10 @@ class AdminController extends Controller
                 'Content-Disposition' => 'attachment; filename="users.csv"',
             ]
         );
+    }
+
+    public function show_earning_detail($id) {
+        return view();
     }
 
 }

@@ -14,7 +14,7 @@
 /** 管理者 */
 Route::get('/admin/index', 'AdminController@index');
 Route::get('/admin/earnings', 'AdminController@show_earning');
-Route::get('/admin/earnings/{id}', 'AdminController@');
+Route::get('/admin/earnings/{id}', 'AdminController@show_earning_detail');
 
 /** 一般ユーザ */
 Auth::routes();

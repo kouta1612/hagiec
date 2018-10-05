@@ -41,7 +41,7 @@ class ItemsController extends Controller
       $items = $items->get();
       $user_id = Auth::id();
       $categories = Category::all();
-      return view('top')->with([
+      return view('/user/top')->with([
         'user_id' => $user_id,
         'items' => $items,
         'categories' => $categories,
@@ -54,7 +54,7 @@ class ItemsController extends Controller
       $user_id = Auth::id();
       $item = Item::find($item_id);
       $item_category_name = $item->category->name;
-      return view('detail')->with([
+      return view('/user/detail')->with([
         'user_id'=>$user_id,
         'item' => $item,
         'item_category_name' => $item_category_name,
@@ -65,7 +65,7 @@ class ItemsController extends Controller
       $user = Auth::user();
       $carts = $user->carts->where('status', '==', 1);
       $cart_in_items = $user->cart_in_items->sortByDesc('updated_at');
-      return view('cart')->with([
+      return view('/user/cart')->with([
         'user' => $user,
         'carts' => $carts,
         'cart_in_items' => $cart_in_items,
@@ -138,7 +138,7 @@ class ItemsController extends Controller
         $totalPrice += $itemPrice * $quantity;
       }
       $payment_status = $request->payment_status;
-      return view('/confirm')->with([
+      return view('/user/confirm')->with([
         'user'=>$user,
         'addresses' => $addresses,
         'selected_address' => $selected_address,
@@ -164,11 +164,11 @@ class ItemsController extends Controller
           }
         }
       }
-      return redirect('/confirm');
+      return redirect('/user/confirm');
     }
 
     public function show_address_form() {
-      return view('/address');
+      return view('/user/address');
     }
 
     public function post_address(Request $request) {
@@ -255,7 +255,7 @@ class ItemsController extends Controller
       $delivery_place = $delivery->state.$delivery->city.$delivery->street.$delivery->building;
       $to = 'kouta1612world69@gmail.com';
       Mail::to($to)->send(new SampleNotification($user->name, $delivery_day, $delivery_place));
-      return view('done_payment')->with('order_id', $order->id);
+      return view('/user/done_payment')->with('order_id', $order->id);
     }
 
 }

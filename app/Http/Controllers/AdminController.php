@@ -30,15 +30,8 @@ class AdminController extends Controller
             $total_price += $order_in_month->price;
         }
 
-        // $csv = [
-        //         ['id', 'name', 'age'],
-        //         ['1', 'tanaka', '20'],
-        //     ];
-
-        // dd($csv);
-
         if(isset($_GET["csv"])) {
-            $csv = $this->csv_format($orders_in_month);
+            $csv = $this->csv_format($orders_in_month, $total_price);
 
             // dd($csv);
             return $this->downloadCSV($csv);
@@ -46,11 +39,15 @@ class AdminController extends Controller
         return view('/admin/earnings', compact('selected_year', 'selected_month', 'total_price', 'orders_in_month'));
     }
 
-    public function csv_format($orders_in_month) {
+    public function csv_format($orders_in_month, $total_price) {
         $row = [];
-        $row[] = array('order_id', 'price');
-        foreach ($orders_in_month as $order) {
-            $col = [$order->id, $order->price];
+        $row[] = array('order_id', 'order_price', 'total_price');
+        foreach ($orders_in_month as $id => $order) {
+            if ($id == 0) {
+                $col = [$order->id, $order->price, $total_price];
+            } else {
+                $col = [$order->id, $order->price];
+            }
             $row[] = $col;
         }
         return $row;
@@ -78,11 +75,6 @@ class AdminController extends Controller
     public function downloadCSV($csv) {
         return new StreamedResponse(
             function() use ($csv) {
-                // $csv = [
-                //     ['id', 'name', 'age'],
-                //     ['1', 'tanaka', '20'],
-                // ];
-                // $csv = User::all(['id', 'name'])->toArray();
                 $stream = fopen('php://output', 'w');
                 foreach($csv as $line) {
                     fputcsv($stream, $line);

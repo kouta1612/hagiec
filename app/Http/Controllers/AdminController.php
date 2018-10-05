@@ -32,16 +32,16 @@ class AdminController extends Controller
 
         if(isset($_GET["csv"])) {
             $csv = $this->csv_format($orders_in_month, $total_price);
-
-            // dd($csv);
+            $csv = mb_convert_encoding($csv, 'SJIS-win', 'UTF-8');
             return $this->downloadCSV($csv);
         }
         return view('/admin/earnings', compact('selected_year', 'selected_month', 'total_price', 'orders_in_month'));
     }
 
+    /** CSV出力するデータの格納 */
     public function csv_format($orders_in_month, $total_price) {
         $row = [];
-        $row[] = array('order_id', 'order_price', 'total_price');
+        $row[] = array('注文番号', '注文金額', '合計金額');
         foreach ($orders_in_month as $id => $order) {
             if ($id == 0) {
                 $col = [$order->id, $order->price, $total_price];

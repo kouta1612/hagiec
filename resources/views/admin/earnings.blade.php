@@ -7,10 +7,10 @@
 
     <h3>月別売上</h3>
 
-    <form action="/admin/earnings" method="get">
+    <form action="/admin/earning" method="get">
         <p><input type="month" name="month" value="{{$selected_year}}-{{$selected_month}}">の売上合計金額 {{$total_price}}円</p>
-        <input type="submit" name="earning" value="送信">
-        <input type="submit" name="csv" value="CSV出力">
+        <button class="submit" data-action="/admin/earning">送信</button>
+        <button class="submit" data-action="/admin/earning/csv">CSV出力</button>
     </form>
 </div>
 <div>
@@ -33,4 +33,11 @@
         </tbody>
     </table>
 </div>
+@endsection
+
+@section('jQuery')
+$('.submit').click(function(){
+    $(this).parent('form').attr('action', $(this).data('action'));
+    $(this).parent('form').submit();
+})
 @endsection

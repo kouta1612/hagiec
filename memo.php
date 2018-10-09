@@ -87,6 +87,12 @@ DB::table('orders)
 ・CSVファイルアップロード
 ・注文明細リンクで画面遷移
 
+やること(10/9)
+・Modelに処理移す
+・商品CSVファイルアップロード
+・商品CSVファイルダウンロード
+
+
 
 CSV作成
 ①DBから取得した注文番号とリンクと注文金額と合計金額などをFileに書き込む
@@ -114,55 +120,3 @@ create database homestead;
 use homestead;
 php artisan migrate
 php artisan db:seed
-
-
-select sum(i.price) as price, o.id as id 
-from `orders` as o 
-inner join `order_details` as od
-on `o`.`id` = `od`.`order_id` 
-inner join `items` as i 
-on `od`.`item_id` = `i`.`id` 
-where year(`o`.`order_time`) = '2018' and month(`o`.`order_time`) = '10' 
-group by `o`.`id`
-
-select o.id,o.order_time,i.name,od.payment_number,i.price,(od.payment_number * i.price) as ans 
-from orders o 
-inner join order_details od 
-on o.id = od.order_id 
-inner join items i 
-on od.item_id = i.id 
-group by od.id;
-
-
-select o.id, (od.payment_number * i.price) as ans 
-from orders o 
-inner join order_details od 
-on o.id = od.order_id 
-inner join items i 
-on od.item_id = i.id 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-select op.id as id, sum(op.p) as total_price
-from (
-    select o.id as id, (od.payment_number * i.price) as p 
-    from orders o 
-    inner join order_details od 
-    on o.id = od.order_id 
-    inner join items i 
-    on od.item_id = i.id
-) op
-group by op.id;

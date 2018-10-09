@@ -37,20 +37,93 @@ class AdminController extends Controller
         return view('/admin/earnings', compact('selected_year', 'selected_month', 'total_price', 'orders_in_month'));
     }
 
-    /** 選択した日付の注文番号と合計金額を取得 */
+    /** 選択した日付の注文番号と注文金額を取得 */
     public function select_earning_data($selected_day) {
 
         $selected_year = date_format($selected_day, 'Y');
         $selected_month = date_format($selected_day, 'm');
 
-        $orders_in_month = DB::table('orders')
-            ->select(DB::raw('sum(items.price) as price, orders.id as id'))
-            ->join('order_details', 'orders.id', '=', 'order_details.order_id')
-            ->join('items', 'order_details.item_id', '=', 'items.id')
-            ->whereYear('orders.order_time', '=', $selected_year)
-            ->whereMonth('orders.order_time', '=', $selected_month)
-            ->groupBy('orders.id')
-            ->get();
+        // $orders_in_month = '
+        // select op.id,sum(op.ans) as total_price
+        // from (
+        //     select o.id, (od.payment_number * i.price) as ans 
+        //     from orders o 
+        //     inner join order_details od 
+        //     on o.id = od.order_id 
+        //     inner join items i 
+        //     on od.item_id = i.id
+        // ) op
+        // group by op.id;
+        // ';
+
+        $a = 
+
+        $orders_in_month = DB::table(
+            function($query) {
+                $query
+                ->select('o.id, (od.payment_number * i.price) as op')
+                ->join('order_details as od', 'o.id', '=', 'od.order_id')
+                ->join('items as i', 'i.id', '=', 'od.item_id')
+                ->get();
+            })  ->select('q.id, sum(q.ans) as total_price')
+                ->groupBy('q.id')
+                ->get();
+        
+        dd($orders_in_month);
+
+        // dd($orders_in_month);
+
+        // $sub_query = DB::table('orders as o')
+        //     ->select('o.id, (od.payment_number * i.price) as op')
+        //     ->join('order_details as od', 'o.id', '=', 'od.order_id')
+        //     ->join('items as i', 'i.id', '=', 'od.item_id')
+        //     ->get();
+        // dd($sub_query);
+
+        // $sub_query = DB::raw(
+        //     'select o.id, (od.payment_number * i.price) as ans 
+        //     from orders o 
+        //     inner join order_details od 
+        //     on o.id = od.order_id 
+        //     inner join items i 
+        //     on od.item_id = i.id'
+        // )->get();
+
+        // dd(toSql($sub_query));
+        
+        // $orders_in_month = DB::table("{{$sub_query}} as q")
+            // ->select('q.id, sum(q.ans) as total_price')
+            // ->groupBy('q.id')
+            // ->get();
+
+
+
+
+
+
+        // $orders_in_month = DB::raw(
+        //     '
+        //     select op.id,sum(op.ans) as total_price
+        //     from (
+        //         select o.id, (od.payment_number * i.price) as ans 
+        //         from orders o 
+        //         inner join order_details od 
+        //         on o.id = od.order_id 
+        //         inner join items i 
+        //         on od.item_id = i.id
+        //     ) op
+        //     group by op.id
+        //     '
+        // )->get();
+        // dd($orders_in_month);
+
+        // $orders_in_month = DB::raw('sum(items.price) as price, orders.id as id'))
+        //     ->join('order_details', 'orders.id', '=', 'order_details.order_id')
+        //     ->join('items', 'order_details.item_id', '=', 'items.id')
+        //     ->whereYear('orders.order_time', '=', $selected_year)
+        //     ->whereMonth('orders.order_time', '=', $selected_month)
+        //     ->groupBy('orders.id')
+        //     ->get();
         
         return $orders_in_month;
     }
@@ -89,8 +162,7 @@ class AdminController extends Controller
     }
 
     public function show_earning_detail($id) {
-        $earning_detail_datas = DB::table('orders')
-            ->select(DB::raw(
+        $earning_detail_datas = select(DB::raw(
                 'order_details.id as id, 
                 items.name as name, 
                 order_details.price as price, 

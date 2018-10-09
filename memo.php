@@ -141,9 +141,24 @@ on o.id = od.order_id
 inner join items i 
 on od.item_id = i.id 
 
-select op.id,sum(op.ans) as total_price
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select op.id as id, sum(op.p) as total_price
 from (
-    select o.id, (od.payment_number * i.price) as ans 
+    select o.id as id, (od.payment_number * i.price) as p 
     from orders o 
     inner join order_details od 
     on o.id = od.order_id 

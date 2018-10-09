@@ -14,7 +14,6 @@ use DB;
 class AdminController extends Controller
 {
     public function index() {
-
         return view('/admin/index');
     }
 
@@ -30,13 +29,7 @@ class AdminController extends Controller
 
     /** 注文詳細情報取得 */
     public function show_earning_detail($id) {
-        $earning_detail_datas = Order::select('od.id as id', 'i.name as name', 'od.price as price', 'od.payment_number as number')
-            ->selectRaw('od.price * od.payment_number as total_price')
-            ->from('orders as o')
-            ->join('order_details as od', 'o.id', '=', 'od.order_id')
-            ->join('items as i', 'i.id', '=', 'od.item_id')
-            ->where('o.id', '=', $id)
-            ->get();
+        $earning_detail_datas = Order::select_earning_detail($id);
 
         return view('/admin/earning_detail', compact('earning_detail_datas'));
     }
@@ -72,20 +65,7 @@ class AdminController extends Controller
         $selected_year = date_format($selected_day, 'Y');
         $selected_month = date_format($selected_day, 'm');
         
-        $sub = Order::select('o.id as id', 'o.order_time as order_time')
-            ->selectRaw('od.payment_number * i.price as p')
-            ->from('orders as o')
-            ->join('order_details as od', 'o.id', '=', 'od.order_id')
-            ->join('items as i', 'od.item_id', '=', 'i.id')
-            ->toSql();
-
-        $orders_in_month = DB::table(DB::raw("({$sub}) as sub"))
-            ->select('sub.id as id')
-            ->selectRaw('sum(sub.p) as price')
-            ->whereYear('sub.order_time', '=', $selected_year)
-            ->whereMonth('sub.order_time', '=', $selected_month)
-            ->groupBy('sub.id')
-            ->get();
+        $orders_in_month = Order::select_earning_data($selected_year, $selected_month);
 
         return $orders_in_month;
     }

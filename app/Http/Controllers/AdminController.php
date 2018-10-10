@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Http\Request;
 use App\OrderDetail;
 use Carbon\Carbon;
+use App\Http\Test;
+use SplFileObject;
 use App\Order;
 use App\Item;
 use App\User;
@@ -17,6 +19,11 @@ class AdminController extends Controller
         return view('/admin/index');
     }
 
+    public function show_items() {
+        $items = Item::all();
+        return view('/admin/items', compact('items'));
+    }
+    
     /** 月別商品情報取得 */
     public function show_earning(Request $request) {
         $selected_day = new Carbon($request->input('month'));

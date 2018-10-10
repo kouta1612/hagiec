@@ -77,6 +77,7 @@ class ItemsController extends Controller
       if(!Auth::check()) {
         return redirect('/login');
       }
+      dd($request);
       // あるユーザのカート情報を取得
       $user_id = $request->user_id;
       $item_id = $request->item_id;

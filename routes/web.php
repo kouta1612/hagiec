@@ -12,9 +12,13 @@
 */
 
 /** 管理者 */
-Route::get('/admin/index', 'AdminController@index');
+Route::get('/admin', 'AdminController@index');
+Route::get('/admin/items', 'AdminController@show_items');
+Route::post('/admin/items/upload', 'AdminItemsController@uploadCSV');
+// Route::post('/admin/items/test', 'AdminItemsController@test');
+Route::post('/admin/items/download', 'AdminItemsController@downloadCSV');
 Route::get('/admin/earning', 'AdminController@show_earning');
-Route::get('/admin/earning/csv', 'AdminController@downloadCSV');
+Route::post('/admin/earning/csv', 'AdminController@downloadCSV');
 Route::get('/admin/earning/{id}', 'AdminController@show_earning_detail');
 
 /** 一般ユーザ */

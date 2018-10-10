@@ -75,6 +75,7 @@ DB::table('orders)
 ・date_format($date, 'Y-m')でyyyy-mm形式の日付を取得
 ・getのリクエストを送るにはhiddenで埋め込んだものをgetで送る
 ・postのリクエストを送るにはfromのnameに埋め込んだものをpostで送る
+・FORMのPOST通信で変な挙動になったらcsrf_field()を疑え
 
 やること(10/4)
 ・明細金額を表示
@@ -89,10 +90,8 @@ DB::table('orders)
 
 やること(10/9)
 ・Modelに処理移す
-・商品CSVファイルアップロード
+・商品CSVファイルアップロード(Trucate後INSERT)
 ・商品CSVファイルダウンロード
-
-
 
 CSV作成
 ①DBから取得した注文番号とリンクと注文金額と合計金額などをFileに書き込む
@@ -120,3 +119,49 @@ create database homestead;
 use homestead;
 php artisan migrate
 php artisan db:seed
+
+
+
+$reader = new Csv();
+$filePath = $request->file('csv_file');
+$reader = $reader->load($filePath)->get();
+dd($reader);
+$rows = $reader->toArray();
+
+<form action="/admin/items/upload" method="post">
+    {{--<p><input type="file" name="csv_file"></p>--}}
+    <p><input type="text" name="test"></p>
+    <button class="submit" data-action="/admin/items/test" data-method="post">test</button>
+    {{--<button class="submit" data-action="/admin/items/upload" data-method="post">アップロード</button>--}}
+    {{--<button class="submit" data-action="/admin/items/download" data-method="get">ダウンロード</button>--}}
+</form>
+
+@section('jQuery')
+$('.submit').click(function(){
+    $(this).parent('form').attr('action', $(this).data('action'));
+    $(this).parent('form').attr('method', $(this).data('method'));
+    $(this).parent('form').submit();
+})
+@endsection
+
+
+$uploaded_file = $request->file('csv_file');
+$file_path = $uploaded_file->path();
+$file = fopen($file_path, "r");
+$csv = [];
+$i = 0;
+while($line = fgetcsv($file)) {
+    if($i > 0) {
+        mb_convert_variables('UTF-8', 'SJIS-win', $line);
+        $row = [];
+        foreach($line as $col) {
+            $row[] = $col;
+        }
+        $csv[] = $row;    
+    }
+    $i++;
+}
+fclose($file);
+
+
+

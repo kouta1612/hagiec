@@ -34,7 +34,7 @@ class AdminItemsController extends Controller
     /** 商品情報アップロード */
     public function uploadCSV(Request $request) {
         $this->validate($request, [
-            'csv_file' => 'required|mimes:txt|max:1000'
+            'csv_file' => 'required|mimes:txt'
         ]);
         $uploaded_file = $request->file('csv_file');
         $file_path = $uploaded_file->path();
@@ -59,12 +59,22 @@ class AdminItemsController extends Controller
             $i++;
         }
         fclose($file);
-
         // 商品テーブル更新 (TRANCATE => INSERT)
-        DB::transaction(function() use($csv) {
+        DB::beginTransaction();
+        try {
             DB::table('items')->truncate();
-            DB::table('items')->insert($csv);
-        });
+            foreach(array_chunk($csv, 1000) as $data) {
+                DB::table('items')->insert($data);
+            }
+            // DB::table('items')->insert($csv);
+            DB::commit();
+        } catch(Exception $e) {
+            DB::rollBack();
+        }
+        // DB::transaction(function() use($csv) {
+        //     DB::table('items')->truncate();
+        //     DB::table('items')->insert($csv);
+        // });
         return redirect('/admin');
     }
 

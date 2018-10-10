@@ -93,6 +93,10 @@ DB::table('orders)
 ・商品CSVファイルアップロード(Trucate後INSERT)
 ・商品CSVファイルダウンロード
 
+やること(10/10)
+・クエリを1000件ずつ区切る
+・TRANCATE&INSERTをDBに区切る
+
 CSV作成
 ①DBから取得した注文番号とリンクと注文金額と合計金額などをFileに書き込む
 ②CSVファイルとして保存
@@ -163,5 +167,7 @@ while($line = fgetcsv($file)) {
 }
 fclose($file);
 
+アップロードできる限度が決まっている
+php.iniで調整できるかも
 
-
+SQLSTATE[HY000]: General error: 1390 Prepared statement contains too many placeholders 

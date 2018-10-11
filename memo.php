@@ -97,6 +97,11 @@ DB::table('orders)
 ・クエリを1000件ずつ区切る
 ・TRANCATE&INSERTをDBに区切る
 
+やること（10/11）
+・ItemsControllerのDB処理部分をModelに移す
+・ユーザ一覧
+・Form.validation
+
 CSV作成
 ①DBから取得した注文番号とリンクと注文金額と合計金額などをFileに書き込む
 ②CSVファイルとして保存
@@ -105,17 +110,22 @@ sudo php artisan serve --host=0.0.0.0 --port=80  // PHPサーバ立ち上げ
 php artisan migrate                              // マイグレーション実行
 php artisan db:seed                              // Seeder実行
 
-visualStudio 
+vscode 
 ⌘ Cmd
 ⌥ Option
 ⇧ Shift
 ^ Ctrl
 
-矩形選択：「option」+「command」+「shift」
-タブ移動：「control」+「tab」
-行削除　：「Ctrl」+「Shift」+「K」
+vscode
+矩形選択：⌥⌘⇧
+タブ移動：^tab
+行削除　：^⇧K
+同じ単語にカーソル当てる：⌘D
+
+git
 作業ツリーの変更の取り消し：git checkout .
 ステージングへの追加の取り消し：git HEAD
+
 
 データベースの中身を新しくする方法
 drop database homestead;
@@ -170,4 +180,4 @@ fclose($file);
 アップロードできる限度が決まっている
 php.iniで調整できるかも
 
-SQLSTATE[HY000]: General error: 1390 Prepared statement contains too many placeholders 
+SQLSTATE[HY000]: General error: 1390 Prepared statement contains too many placeholders

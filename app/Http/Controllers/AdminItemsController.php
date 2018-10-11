@@ -45,36 +45,24 @@ class AdminItemsController extends Controller
             if($i > 0) {
                 mb_convert_variables('UTF-8', 'SJIS-win', $line);
                 $csv[] = array(
-                    'id' => $line[0], 
-                    'name' => $line[1], 
-                    'price' => $line[2], 
-                    'category_id' => $line[3], 
-                    'country' => $line[4], 
-                    'description' => $line[5], 
+                    'id'            => $line[0], 
+                    'name'          => $line[1], 
+                    'price'         => $line[2], 
+                    'category_id'   => $line[3], 
+                    'country'       => $line[4], 
+                    'description'   => $line[5], 
                     'delivery_date' => $line[6],
-                    'image_url' => $line[7], 
-                    'stock_number' => $line[8],
+                    'image_url'     => $line[7], 
+                    'stock_number'  => $line[8],
                 );
             }
             $i++;
         }
         fclose($file);
-        // 商品テーブル更新 (TRANCATE => INSERT)
-        DB::beginTransaction();
-        try {
-            DB::table('items')->truncate();
-            foreach(array_chunk($csv, 1000) as $data) {
-                DB::table('items')->insert($data);
-            }
-            // DB::table('items')->insert($csv);
-            DB::commit();
-        } catch(Exception $e) {
-            DB::rollBack();
-        }
-        // DB::transaction(function() use($csv) {
-        //     DB::table('items')->truncate();
-        //     DB::table('items')->insert($csv);
-        // });
+
+        // 商品テーブル更新
+        Item::truncate_insert($csv);
+
         return redirect('/admin');
     }
 

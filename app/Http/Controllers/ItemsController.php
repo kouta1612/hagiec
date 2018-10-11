@@ -42,10 +42,10 @@ class ItemsController extends Controller
       $user_id = Auth::id();
       $categories = Category::all();
       return view('/user/top')->with([
-        'user_id' => $user_id,
-        'items' => $items,
-        'categories' => $categories,
-        'category_ids' => $category_ids,
+        'user_id'          => $user_id,
+        'items'            => $items,
+        'categories'       => $categories,
+        'category_ids'     => $category_ids,
         'search_item_name' => $search_item_name,
       ]);
     }
@@ -55,8 +55,8 @@ class ItemsController extends Controller
       $item = Item::find($item_id);
       $item_category_name = $item->category->name;
       return view('/user/detail')->with([
-        'user_id'=>$user_id,
-        'item' => $item,
+        'user_id'            =>$user_id,
+        'item'               => $item,
         'item_category_name' => $item_category_name,
       ]);
     }
@@ -140,12 +140,12 @@ class ItemsController extends Controller
       }
       $payment_status = $request->payment_status;
       return view('/user/confirm')->with([
-        'user'=>$user,
-        'addresses' => $addresses,
+        'user'             =>$user,
+        'addresses'        => $addresses,
         'selected_address' => $selected_address,
-        'totalQuantity'=>$totalQuantity,
-        'totalPrice'=>$totalPrice,
-        'payment_status'=>$payment_status
+        'totalQuantity'    =>$totalQuantity,
+        'totalPrice'       =>$totalPrice,
+        'payment_status'   =>$payment_status
       ]);
     }
 
@@ -210,11 +210,11 @@ class ItemsController extends Controller
 
       // 注文テーブルの登録
       $order = new Order;
-      $order['user_id'] = $user->id;
-      $order['order_time'] = $updated_at;
-      $order['delivery_day'] = $request->delivery_date;
+      $order['user_id']         = $user->id;
+      $order['order_time']      = $updated_at;
+      $order['delivery_day']    = $request->delivery_date;
       $order['delivery_method'] = $request->payment;
-      $order['delivery_to_id'] = $request->delivery_id;
+      $order['delivery_to_id']  = $request->delivery_id;
       $order->save();
 
       // 注文明細テーブルと商品テーブルとカートテーブルの登録・更新準備
@@ -227,12 +227,12 @@ class ItemsController extends Controller
       $params = [];
       foreach($carts->get() as $id => $cart) {
         $order_detail_arrays[] = array(
-          'order_id' => $order->id,
-          'item_id' => $cart->item_id,
+          'order_id'       => $order->id,
+          'item_id'        => $cart->item_id,
           'payment_number' => $cart->quantity,
-          'price' => $cart_in_items[$id]->price,
-          'created_at' => $updated_at,
-          'updated_at' => $updated_at,
+          'price'          => $cart_in_items[$id]->price,
+          'created_at'     => $updated_at,
+          'updated_at'     => $updated_at,
         );
         $new_stock_number = $cart_in_items[$id]->stock_number - $cart->quantity;
         $cases[] = "when id = {$cart->item_id} then {$new_stock_number}";
@@ -242,8 +242,8 @@ class ItemsController extends Controller
       // 注文明細テーブルと商品テーブルとカートテーブルの登録・更新処理
       $order->order_details()->insert($order_detail_arrays);
       $carts->update([
-        'quantity' => 0,
-        'status' => 0,
+        'quantity'   => 0,
+        'status'     => 0,
         'updated_at' => $updated_at,
       ]);
       $cases = implode(' ', $cases);

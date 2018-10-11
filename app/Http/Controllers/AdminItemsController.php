@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use App\Item;
-use DB;
 
 class AdminItemsController extends Controller
 {

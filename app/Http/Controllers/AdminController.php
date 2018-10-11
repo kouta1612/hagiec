@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Http\Request;
 use App\OrderDetail;
 use Carbon\Carbon;
@@ -22,23 +23,23 @@ class AdminController extends Controller
     /** ユーザ情報一覧 */
     public function show_user() {
         $users = User::all();
-        return view('/admin/users', compact('users'));
+        return view('/admin/user', compact('users'));
     }
 
     /** 商品一覧情報取得 */
-    public function show_items() {
+    public function show_item() {
         $items = Item::all();
-        return view('/admin/items', compact('items'));
+        return view('/admin/item', compact('items'));
     }
 
     /** 月別商品情報取得 */
-    public function show_earnings(Request $request) {
+    public function show_earning(Request $request) {
         $selected_day = new Carbon($request->input('month'));
         $selected_year = date_format($selected_day, 'Y');
         $selected_month = date_format($selected_day, 'm');
         $orders_in_month = $this->select_earning_data($selected_day);
         $total_price = $this->order_price($orders_in_month);
-        return view('/admin/earnings', compact('selected_year', 'selected_month', 'total_price', 'orders_in_month'));
+        return view('/admin/earning', compact('selected_year', 'selected_month', 'total_price', 'orders_in_month'));
     }
 
     /** private */

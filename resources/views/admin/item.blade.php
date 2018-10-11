@@ -36,8 +36,8 @@
     <form action="/admin/items/upload" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <p><input type="file" name="csv_file"></p>
-        <button class="submit" data-action="/admin/items/upload">アップロード</button>
-        <button class="submit" data-action="/admin/items/download">ダウンロード</button>
+        <button class="submit" data-action="/admin/item/upload">アップロード</button>
+        <button class="submit" data-action="/admin/item/download">ダウンロード</button>
     </form>
 
 </div>

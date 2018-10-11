@@ -2,12 +2,14 @@
 
 namespace App;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Payment;
 use App\Item;
 use App\Cart;
-use App\Payment;
+use DB;
+
 
 class User extends Authenticatable
 {

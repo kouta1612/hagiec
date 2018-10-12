@@ -42,6 +42,9 @@ class AdminUserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->tel = $request->tel;
+        if($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
         $user->save();
         return redirect('/admin/user');
     }

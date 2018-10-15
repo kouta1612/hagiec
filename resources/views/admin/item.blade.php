@@ -39,7 +39,6 @@
         <button class="submit" data-action="/admin/item/upload">アップロード</button>
         <button class="submit" data-action="/admin/item/download">ダウンロード</button>
     </form>
-
 </div>
 @endsection
 

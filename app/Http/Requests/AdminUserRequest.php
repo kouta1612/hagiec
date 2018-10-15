@@ -21,7 +21,7 @@ class AdminUserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(AdminUserRequest $request)
     {
         return [
             'name'                  => 'required|string|max:255',
@@ -30,6 +30,21 @@ class AdminUserRequest extends FormRequest
             'password'              => 'required|confirmed|min:6',
             'password_confirmation' => 'required|min:6',
         ];
+        // if($request->has('is_update_password')) {
+        //     return [
+        //         'name'                  => 'required|string|max:255',
+        //         'email'                 => 'required|string|email|max:255',
+        //         'tel'                   => 'required|string',
+        //         'password'              => 'required|confirmed|min:6',
+        //         'password_confirmation' => 'required|min:6',
+        //     ];    
+        // } else {
+        //     return [
+        //         'name'                  => 'required|string|max:255',
+        //         'email'                 => 'required|string|email|max:255',
+        //         'tel'                   => 'required|string',
+        //     ];
+        // }
     }
 
     public function messages() 

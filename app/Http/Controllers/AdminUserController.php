@@ -49,6 +49,12 @@ class AdminUserController extends Controller
         return redirect('/admin/user');
     }
 
+    public function destroy($id) {
+        $user = User::find($id);
+        $user->delete();
+        return redirect('/admin/user');
+    }
+
     /** private */
 
     /** CSV出力データの格納 */

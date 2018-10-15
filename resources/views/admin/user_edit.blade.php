@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password" class="col-md-2 control-label">パスワード</label>
-                            <label for="update">更新</label><input id="update" type="checkbox" checked>
+                            <label for="update">更新</label><input id="update" type="checkbox" name="is_update_password" checked>
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password">
                             </div>

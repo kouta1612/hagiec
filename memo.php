@@ -108,9 +108,14 @@ DB::table('orders)
 ・全機関と選択期間でダウンロード処理作成
 
 やること（10/12）
-・passwordは最初空白で入れて、横にチェックボックス作成、チェック付いてたら更新
+・passwordは最初空白で入れて、横にチェックボックス作成、チェック付いてたら更新 => 完了
 　付いてなかったら更新できない。JSでチェック消したらパスワード消す。
-・validationはチェックボックスのチェックの有無を判定して、入ってたら入れるし、入ってなかったらパスワードを更新対象から除外する
+・validationはチェックボックスのチェックの有無を判定して、入ってたら入れるし、入ってなかったらパスワードを更新対象から除外する => 完了
+
+やること（10/15）
+・ユーザ情報一覧に注文一覧リンクを追加する
+・
+
 
 CSV作成
 ①DBから取得した注文番号とリンクと注文金額と合計金額などをFileに書き込む
@@ -144,7 +149,8 @@ use homestead;
 php artisan migrate
 php artisan db:seed
 
-
+コントローラ作成
+php artisan make:controller AdminUserOrderController
 
 $reader = new Csv();
 $filePath = $request->file('csv_file');

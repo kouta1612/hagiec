@@ -18,15 +18,13 @@ Route::post('/admin/user/download', 'AdminUserController@downloadCSV');
 Route::get('/admin/user/{id}', 'AdminUserController@show');
 Route::post('/admin/user/{id}', 'AdminUserController@edit');
 Route::delete('/admin/user/{id}/delete', 'AdminUserController@destroy');
+Route::get('/admin/user/{id}/order', 'AdminUserOrderController@show');
 Route::get('/admin/item', 'AdminController@show_item');
 Route::post('/admin/item/upload', 'AdminItemsController@uploadCSV');
 Route::post('/admin/item/download', 'AdminItemsController@downloadCSV');
 Route::get('/admin/earning', 'AdminController@show_earning');
 Route::get('/admin/earning/csv', 'AdminEarningController@downloadCSV');
 Route::get('/admin/earning/{id}', 'AdminEarningController@show_earning_detail');
-Route::get('/admin/user/{id}/delete', function() {
-  return 'hello';
-});
 
 /** 一般ユーザ */
 Auth::routes();

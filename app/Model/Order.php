@@ -47,20 +47,23 @@ class Order extends Model
       return $orders_in_month;
     }
 
-    /** ユーザの注文金額を取得 */
-    public static function select_user_order_price($id) {
+    /** ユーザの注文情報を取得 */
+    public static function select_user_order($id) {
 
-      $sub = Order::select('o.id as id')
+      $sub = DB::table('orders as o')
+        ->select('o.id as id')
         ->selectRaw('sum(od.payment_number * i.price) as order_price')
         ->from('orders as o')
         ->join('order_details as od', 'o.id', '=', 'od.order_id')
         ->join('items as i', 'od.item_id', '=', 'i.id')
-        ->groupBy('o.id')
-        ->toSql();
+        ->join('users as u', 'o.user_id', '=', 'u.id')
+        ->where('u.id', '=', $id)
+        ->groupBy('o.id');
 
-      $user_orders = DB::table(DB::raw("({$sub}) as sub"))
-        ->join('orders as o', 'sub.id', '=', 'o.id')
+      $user_orders = DB::table('orders as o')
         ->select('o.id', 'o.order_time', 'o.delivery_day', 'o.delivery_method', 'sub.order_price')
+        ->join(DB::raw("({$sub->toSql()}) as sub"), 'o.id', '=', 'sub.id')
+        ->mergeBindings($sub)
         ->get();
 
       return $user_orders;

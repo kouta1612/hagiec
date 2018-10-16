@@ -19,6 +19,7 @@ Route::get('/admin/user/{id}', 'AdminUserController@show');
 Route::post('/admin/user/{id}', 'AdminUserController@edit');
 Route::delete('/admin/user/{id}/delete', 'AdminUserController@destroy');
 Route::get('/admin/user/{id}/order', 'AdminUserOrderController@show');
+Route::get('/admin/user/{user_id}/order/{order_id}', 'AdminUserOrderController@show_detail');
 Route::get('/admin/item', 'AdminController@show_item');
 Route::post('/admin/item/upload', 'AdminItemsController@uploadCSV');
 Route::post('/admin/item/download', 'AdminItemsController@downloadCSV');

@@ -197,3 +197,9 @@ fclose($file);
 php.iniで調整できるかも
 
 SQLSTATE[HY000]: General error: 1390 Prepared statement contains too many placeholders
+
+
+Expression #2 of SELECT list is not in GROUP BY clause 
+and contains nonaggregated column 'homestead.od.payment_number' 
+which is not functionally dependent on columns in GROUP BY clause
+; this is incompatible with sql_mode=only_full_group_by

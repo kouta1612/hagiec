@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Order;
+use App\OrderDetail;
 
 class AdminUserOrderController extends Controller
 {
@@ -16,6 +17,6 @@ class AdminUserOrderController extends Controller
 
     public function show_detail($user_id, $order_id) {
         $order_details = OrderDetail::select_order_detail($user_id, $order_id);
-
+        return view('/admin/user_order_detail', compact('order_details'));
     }
 }

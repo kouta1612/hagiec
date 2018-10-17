@@ -3,11 +3,15 @@
 @section('title', '月別売上詳細')
 
 @section('content')
-    <div>
-        <h3>月別売上詳細</h3>
-
-        <div>
-            <table>
+<div class="container">
+    <div class="row">
+        <div class="col my-5 text-center">
+            <h3>月別売上詳細</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col ">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>注文明細ID</th>
@@ -29,6 +33,14 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+    <div>
+        
+
+        <div>
+            
         </div>
     </div>
 @endsection

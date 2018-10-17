@@ -53,7 +53,6 @@ class Order extends Model
       $sub = DB::table('orders as o')
         ->select('o.id as id')
         ->selectRaw('sum(od.payment_number * i.price) as order_price')
-        ->from('orders as o')
         ->join('order_details as od', 'o.id', '=', 'od.order_id')
         ->join('items as i', 'od.item_id', '=', 'i.id')
         ->join('users as u', 'o.user_id', '=', 'u.id')

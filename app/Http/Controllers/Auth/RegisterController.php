@@ -83,7 +83,7 @@ class RegisterController extends Controller
 
       Payment::create([
         'user_id' => $user_id,
-        'status' => 0
+        'status' => '代金引換'
       ]);
 
       return User::create([

@@ -65,10 +65,6 @@
               <form id="payment_form" class="form-group" action="/payment/0" method="post">
                 {{ csrf_field() }}
                 <div class="text-center py-5">
-                  {{--
-                    <button class="btn btn-primary mr-5 submit" id="money">代金引換</button>
-                    <button class="btn btn-primary submit" id="credit">クレジット</button>
-                   --}}
                    <button class="btn btn-primary mr-5 submit" data-action="/payment/0">代金引換</button>
                    <button class="btn btn-primary submit" data-action="/payment/1">クレジット</button>
                 </div>

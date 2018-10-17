@@ -61,4 +61,18 @@ class User extends Authenticatable
       return $this->hasMany('App\Order');
     }
 
+    /** ユーザのお届け先情報と決済情報の取得 */
+    public static function select_delivery_payment($user_id, $order_id) {
+      $user_data = DB::table('users as u')
+        ->select('p.status as status', 'd.name as name', 'd.tel as tel', 'd.postal_code as postal_code', 'd.state as state', 'd.city as city', 'd.street as street', 'd.building as building')
+        ->join('payments as p', 'u.id', '=', 'p.user_id')
+        ->join('orders as o', 'u.id', '=', 'o.user_id')
+        ->join('deliveries as d', 'u.id', '=', 'd.user_id')
+        ->where('u.id', '=', $user_id)
+        ->where('o.id', '=', $order_id)
+        ->first();
+
+      return $user_data;
+    }
+
 }

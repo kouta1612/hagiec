@@ -113,11 +113,15 @@ DB::table('orders)
 ・validationはチェックボックスのチェックの有無を判定して、入ってたら入れるし、入ってなかったらパスワードを更新対象から除外する => 完了
 
 やること（10/15）
-・ユーザ情報一覧に注文一覧リンクを追加する
-・注文一覧に注文詳細リンクを追加する
+・ユーザ情報一覧に注文一覧リンクを追加する => 完了
+・注文一覧に注文詳細リンクを追加する => 完了
 
 やること（10/16）
-・
+・ユーザ詳細情報に注文決済情報を表示 => 完了
+・ユーザ詳細情報にお届け先情報を表示 => 完了
+
+やること（10/17）
+・見た目をBootstrapで綺麗にする
 
 
 CSV作成
@@ -177,7 +181,6 @@ $('.submit').click(function(){
 })
 @endsection
 
-
 $uploaded_file = $request->file('csv_file');
 $file_path = $uploaded_file->path();
 $file = fopen($file_path, "r");
@@ -201,8 +204,53 @@ php.iniで調整できるかも
 
 SQLSTATE[HY000]: General error: 1390 Prepared statement contains too many placeholders
 
-
 Expression #2 of SELECT list is not in GROUP BY clause 
 and contains nonaggregated column 'homestead.od.payment_number' 
 which is not functionally dependent on columns in GROUP BY clause
 ; this is incompatible with sql_mode=only_full_group_by
+
+質問
+・使うデバイス（MACかWINDOWSか）
+・エディタの指定があるのか
+・開発環境（ローカルかクラウドか）
+・ステージング環境、本番環境はどこで管理してますか。自分が担当するか。
+・コード管理ツールやタスク管理ツールは何を使っているか。
+・社内ツールはあるか
+・言語は他に何を使うのか
+・参画前に勉強すべきことはなにか
+・言語のバージョンはなにか
+・プリジェクトの人数
+・自分のタスクの割り振り
+
+・月の残業時間は皆さんどれくらいなんですか？（仕事の質問した後）
+・服装はどんな感じか
+・職場の雰囲気
+
+・名前
+・何年やってきたか 
+・言語は何年やってました
+・印象に残っている案件
+　・どんな案件か
+　・チームの規模
+　・自分の役割
+　・どういうことを学べたか・チームにどういう影響を与えたか
+
+・言語に落とし込む
+・第一声はきはき
+・迷い言葉をなくす
+・相手の目をみる
+・笑顔
+
+萩原孔太と申します
+エンジニア経験としては２年目になります
+言語の経験としてはJavaが１年でPHPが１年くらいです
+これまでの経験としては常駐作業が半年で社内作業が１年ほどしています
+開発環境としてはwindowsが主でした
+今まで担当してきた案件で印象に残っているものとして一つあげる（年が長い方がよい）
+
+
+印象：社内と常駐に分ける
+
+
+
+

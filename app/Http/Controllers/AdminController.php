@@ -56,10 +56,10 @@ class AdminController extends Controller
     }
 
     /** 注文金額計算 */
-    private function order_price($orders_in_month) {
+    private function order_price($order_details) {
         $total_price = 0;
-        foreach ($orders_in_month as $order_in_month) {
-            $total_price += $order_in_month->price;
+        foreach ($order_details as $order_detail) {
+            $total_price += $order_detail->price;
         }
         return $total_price;
     }

@@ -81,7 +81,7 @@ DB::table('orders)
 
 やること(10/4)
 ・明細金額を表示 => 完了
-・日付の保持
+・日付の保持 => 完了
 ・売上画面でのCSV保存 => 完了
 ・CSVファイルダウンロード => 完了
 ・詳細ページに遷移 => 完了
@@ -103,9 +103,8 @@ DB::table('orders)
 ・ItemsControllerのDB処理部分をModelに移す => 完了
 ・ユーザ一覧 => 完了
 ・Form.validation => 完了
-・ユーザ一覧表示（顧客ID、顧客名、メールアドレス、パスワード、電話番号）、編集リンク、削除リンク、追加リンク
-・全期間と選択期間で表示を切り替え
-・全機関と選択期間でダウンロード処理作成
+・ユーザ一覧表示（顧客ID、顧客名、メールアドレス、パスワード、電話番号）、編集リンク、削除リンク　=> 完了
+・ユーザダウンロード作成処理 => 完了
 
 やること（10/12）
 ・passwordは最初空白で入れて、横にチェックボックス作成、チェック付いてたら更新 => 完了
@@ -121,8 +120,14 @@ DB::table('orders)
 ・ユーザ詳細情報にお届け先情報を表示 => 完了
 
 やること（10/17）
-・見た目をBootstrapで綺麗にする
+・見た目をBootstrapで綺麗にする => 完了
 
+やること（10/18）
+・サイドバーで画面遷移のリンクを作成
+・料金のカンマ区切り
+・商品一覧作成
+・ページャー作成
+・日付の書式（見た目）
 
 CSV作成
 ①DBから取得した注文番号とリンクと注文金額と合計金額などをFileに書き込む
@@ -158,99 +163,4 @@ php artisan db:seed
 
 コントローラ作成
 php artisan make:controller AdminUserOrderController
-
-$reader = new Csv();
-$filePath = $request->file('csv_file');
-$reader = $reader->load($filePath)->get();
-dd($reader);
-$rows = $reader->toArray();
-
-<form action="/admin/items/upload" method="post">
-    {{--<p><input type="file" name="csv_file"></p>--}}
-    <p><input type="text" name="test"></p>
-    <button class="submit" data-action="/admin/items/test" data-method="post">test</button>
-    {{--<button class="submit" data-action="/admin/items/upload" data-method="post">アップロード</button>--}}
-    {{--<button class="submit" data-action="/admin/items/download" data-method="get">ダウンロード</button>--}}
-</form>
-
-@section('jQuery')
-$('.submit').click(function(){
-    $(this).parent('form').attr('action', $(this).data('action'));
-    $(this).parent('form').attr('method', $(this).data('method'));
-    $(this).parent('form').submit();
-})
-@endsection
-
-$uploaded_file = $request->file('csv_file');
-$file_path = $uploaded_file->path();
-$file = fopen($file_path, "r");
-$csv = [];
-$i = 0;
-while($line = fgetcsv($file)) {
-    if($i > 0) {
-        mb_convert_variables('UTF-8', 'SJIS-win', $line);
-        $row = [];
-        foreach($line as $col) {
-            $row[] = $col;
-        }
-        $csv[] = $row;    
-    }
-    $i++;
-}
-fclose($file);
-
-アップロードできる限度が決まっている
-php.iniで調整できるかも
-
-SQLSTATE[HY000]: General error: 1390 Prepared statement contains too many placeholders
-
-Expression #2 of SELECT list is not in GROUP BY clause 
-and contains nonaggregated column 'homestead.od.payment_number' 
-which is not functionally dependent on columns in GROUP BY clause
-; this is incompatible with sql_mode=only_full_group_by
-
-質問
-・使うデバイス（MACかWINDOWSか）
-・エディタの指定があるのか
-・開発環境（ローカルかクラウドか）
-・ステージング環境、本番環境はどこで管理してますか。自分が担当するか。
-・コード管理ツールやタスク管理ツールは何を使っているか。
-・社内ツールはあるか
-・言語は他に何を使うのか
-・参画前に勉強すべきことはなにか
-・言語のバージョンはなにか
-・プリジェクトの人数
-・自分のタスクの割り振り
-
-・月の残業時間は皆さんどれくらいなんですか？（仕事の質問した後）
-・服装はどんな感じか
-・職場の雰囲気
-
-・名前
-・何年やってきたか 
-・言語は何年やってました
-・印象に残っている案件
-　・どんな案件か
-　・チームの規模
-　・自分の役割
-　・どういうことを学べたか・チームにどういう影響を与えたか
-
-・言語に落とし込む
-・第一声はきはき
-・迷い言葉をなくす
-・相手の目をみる
-・笑顔
-
-萩原孔太と申します
-エンジニア経験としては２年目になります
-言語の経験としてはJavaが１年でPHPが１年くらいです
-これまでの経験としては常駐作業が半年で社内作業が１年ほどしています
-開発環境としてはwindowsが主でした
-今まで担当してきた案件で印象に残っているものとして一つあげる（年が長い方がよい）
-
-
-印象：社内と常駐に分ける
-
-
-
 

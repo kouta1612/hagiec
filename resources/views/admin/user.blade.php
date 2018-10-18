@@ -24,6 +24,7 @@
     </div>
     <div class="row">
         <div class="col">
+            {{ $users->links("pagination::bootstrap-4") }}
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -54,6 +55,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $users->links("pagination::bootstrap-4") }}
         </div>
     </div>
     <div class="row">

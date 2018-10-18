@@ -42,10 +42,37 @@ class Order extends Model
         ->whereYear('sub.order_time', '=', $selected_year)
         ->whereMonth('sub.order_time', '=', $selected_month)
         ->groupBy('sub.id')
-        ->get();
+        ->paginate(10);
       
       return $orders_in_month;
     }
+
+    /** 注文合計金額を取得 */
+    // public static function select_order_price($selected_year, $selected_month) {
+    //   $sub = Order::select('o.id as id', 'o.order_time as order_time')
+    //     ->selectRaw('od.payment_number * i.price as p')
+    //     ->from('orders as o')
+    //     ->join('order_details as od', 'o.id', '=', 'od.order_id')
+    //     ->join('items as i', 'od.item_id', '=', 'i.id')
+    //     ->toSql();
+
+    //   $sub2 = DB::table(DB::raw("({$sub}) as sub"))
+    //     ->select('sub.id as id')
+    //     ->selectRaw('sum(sub.p) as price')
+    //     ->whereYear('sub.order_time', '=', $selected_year)
+    //     ->whereMonth('sub.order_time', '=', $selected_month)
+    //     ->groupBy('sub.id')
+    //     ->toSql();
+        
+    //   $total_price = DB::table(DB::raw("({$sub2}) as sub2"))
+    //     ->select('sub2.id')
+    //     // ->selectRaw('sum(sub2.price) as total_price')
+    //     ->get();
+
+    //   dd($total_price);
+
+    //   return $total_price;
+    // }
 
     /** ユーザの注文情報を取得 */
     public static function select_user_order($id) {

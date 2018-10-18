@@ -22,13 +22,13 @@ class AdminController extends Controller
 
     /** ユーザ情報一覧 */
     public function show_user() {
-        $users = User::all();
+        $users = User::paginate(10);
         return view('/admin/user', compact('users'));
     }
 
     /** 商品一覧情報取得 */
     public function show_item() {
-        $items = Item::all();
+        $items = Item::paginate(10);
         return view('/admin/item', compact('items'));
     }
 
@@ -44,6 +44,7 @@ class AdminController extends Controller
         $selected_month = date_format($selected_day, 'm');
         $orders_in_month = $this->select_earning_data($selected_day);
         $total_price = $this->order_price($orders_in_month);
+        // $total_price = Order::select_order_price($selected_year, $selected_month);
         return view('/admin/earning', compact('selected_year', 'selected_month', 'total_price', 'orders_in_month'));
     }
 

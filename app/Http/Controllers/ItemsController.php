@@ -38,7 +38,7 @@ class ItemsController extends Controller
       } else if(isset($category_ids)) {
         $items->whereIn('category_id', $category_ids);
       }
-      $items = $items->get();
+      $items = $items->paginate(9);
       $user_id = Auth::id();
       $categories = Category::all();
       return view('/user/top')->with([

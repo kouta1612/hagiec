@@ -20,9 +20,10 @@
       </form>
     </div>
     <div class="col-9">
+      {{ $items->links("pagination::bootstrap-4") }}
       @foreach($items as $item)
         @if($loop->index % 3 == 0)
-          <div class="row mb-5">
+      <div class="row mb-5">
         @endif
         <div class="col-4">
           <div class="card top_card">
@@ -44,6 +45,7 @@
           </div>
         @endif
       @endforeach
+      {{ $items->links("pagination::bootstrap-4") }}
     </div>
   </div>
 </div>

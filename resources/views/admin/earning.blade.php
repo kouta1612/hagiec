@@ -20,6 +20,7 @@
     </div>
     <div class="row">
         <div class="col mt-5">
+            {{ $orders_in_month->links("pagination::bootstrap-4") }}
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -38,6 +39,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $orders_in_month->links("pagination::bootstrap-4") }}
         </div>
     </div>
 </div>

@@ -12,6 +12,7 @@
     <div class="row">
         <div class="col">
             <div class="table-responsive">
+                {{ $items->links("pagination::bootstrap-4") }}
                 <table class="table table-striped table-condensed">
                     <thead>
                         <tr>
@@ -36,6 +37,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $items->links("pagination::bootstrap-4") }}
             </div>
         </div>
     </div>

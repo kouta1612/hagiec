@@ -21,6 +21,7 @@ Route::delete('/admin/user/{id}/delete', 'AdminUserController@destroy');
 Route::get('/admin/user/{id}/order', 'AdminUserOrderController@show');
 Route::get('/admin/user/{user_id}/order/{order_id}', 'AdminUserOrderController@show_detail');
 Route::get('/admin/item', 'AdminController@show_item');
+Route::get('/admin/item_load', 'AdminController@show_item_load');
 Route::post('/admin/item/upload', 'AdminItemsController@uploadCSV');
 Route::post('/admin/item/download', 'AdminItemsController@downloadCSV');
 Route::get('/admin/earning', 'AdminController@show_earning');

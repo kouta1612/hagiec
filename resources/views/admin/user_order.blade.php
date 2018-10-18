@@ -30,7 +30,7 @@
                             <td>{{ $user_order->order_time }}</td>
                             <td>{{ $user_order->delivery_day }}</td>
                             <td>{{ $user_order->delivery_method }}</td>
-                            <td>{{ $user_order->order_price }}</td>
+                            <td>¥{{ number_format($user_order->order_price) }}</td>
                             <td><a href="/admin/user/{{ $user->id }}/order/{{ $user_order->id }}">注文詳細</a></td>
                         </tr>
                     @endforeach

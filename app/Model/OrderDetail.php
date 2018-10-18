@@ -24,7 +24,8 @@ class OrderDetail extends Model
     // 注文明細IDと商品名と単価と購入数と合計金額
     public static function select_order_detail($user_id, $order_id) {
       $order_details = DB::table('order_details as od')
-        ->select('od.id as id', 'i.name as name', 'i.price as price', 'od.payment_number as number')
+        ->select('od.id as id', 'i.name as name', 'od.payment_number as number')
+        ->selectRaw('i.price as price')
         ->selectRaw('i.price * od.payment_number as total_price')
         ->join('orders as o', 'od.order_id', '=', 'o.id')
         ->join('users as u', 'o.user_id', '=', 'u.id')

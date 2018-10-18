@@ -24,11 +24,11 @@
                 <tbody>
                     @foreach ($earning_detail_datas as $data)
                     <tr>
-                        <td>{{$data->id}}</td>
-                        <td>{{$data->name}}</td>
-                        <td>{{$data->price}}</td>
-                        <td>{{$data->number}}</td>
-                        <td>{{$data->total_price}}</td>
+                        <td>{{ $data->id }}</td>
+                        <td>{{ $data->name }}</td>
+                        <td>{{ number_format($data->price) }}</td>
+                        <td>{{ $data->number }}</td>
+                        <td>{{ number_format($data->total_price) }}</td>
                     </tr>
                     @endforeach
                 </tbody>

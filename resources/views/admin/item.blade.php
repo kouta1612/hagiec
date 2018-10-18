@@ -6,39 +6,38 @@
 <div class="container">
     <div class="row">
         <div class="col my-5 text-center">
-            <h3>商品情報</h3>
+            <h3>商品一覧</h3>
         </div>
     </div>
     <div class="row">
-        <div class="col my-5 text-center">
-            <form action="/admin/items/upload" method="post" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                <div class="input-group mb-5">
-                    <label class="input-group-btn">
-                        <span class="btn btn-primary">
-                            Choose File<input class="form-control-file" id="csv_file_input" type="file" name="csv_file" style="display:none">
-                        </span>
-                    </label>
-                    <input type="text" class="form-control" readonly="">
-                </div>
-                <button class="submit btn btn-primary mr-3" data-action="/admin/item/upload">アップロード</button>
-                <button class="submit btn btn-primary" data-action="/admin/item/download">ダウンロード</button>
-            </form>
+        <div class="col">
+            <div class="table-responsive">
+                <table class="table table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>商品名</th>
+                            <th>金額</th>
+                            <th>原産国</th>
+                            <th>配送必要日数</th>
+                            <th>URL</th>
+                            <th>在庫数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($items as $item)
+                            <tr>
+                                <td>{{$item->name}}</td>
+                                <td>{{number_format($item->price)}}</td>
+                                <td>{{$item->country}}</td>
+                                <td>{{$item->delivery_date}}</td>
+                                <td>{{$item->image_url}}</td>
+                                <td>{{$item->stock_number}}</td>
+                            </tr> 
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-@endsection
-
-@section('jQuery')
-$('.submit').click(function(){
-    $(this).parent('form').attr('action', $(this).data('action'));
-    $(this).parent('form').submit();
-})
-
-$(document).on('change', ':file', function() {
-    var input = $(this),
-    numFiles = input.get(0).files ? input.get(0).files.length : 1,
-    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-    input.parent().parent().next(':text').val(label);
-});
 @endsection

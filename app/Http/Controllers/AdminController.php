@@ -32,6 +32,11 @@ class AdminController extends Controller
         return view('/admin/item', compact('items'));
     }
 
+    /** 商品入出力画面取得 */
+    public function show_item_load() {
+        return view('/admin/item_load');
+    }
+
     /** 月別商品情報取得 */
     public function show_earning(Request $request) {
         $selected_day = new Carbon($request->input('month'));

@@ -16,31 +16,31 @@
       @else
       @foreach($cart_in_items as $cart_in_item)
       @if($cart_in_item->pivot->status == 1)
-      <div class="row border-top border-muted py-3 mb-3 cartItem" id="{{$cart_in_item->id}}">
+      <div class="row border-top border-muted py-3 mb-3 cartItem" id="{{ $cart_in_item->id }}">
         <div class="col-2 d-flex align-items-center">
           <div class="card">
-              <img class="card-img-top" src="{{$cart_in_item->image_url}}" alt="Card image cap">
+              <img class="card-img-top" src="{{ $cart_in_item->image_url }}" alt="Card image cap">
           </div>
         </div>
         <div class="col-5">
-          <p><a href="/detail">{{$cart_in_item->name}}</a></p>
-          <p>残り {{$cart_in_item->stock_number}}点</p>
-          <form class="form-group" action="/destroy/{{$cart_in_item->id}}" id="form_{{$cart_in_item->id}}" method="post">
+          <p><a href="/detail">{{ $cart_in_item->name }}</a></p>
+          <p>残り {{ $cart_in_item->stock_number }}点</p>
+          <form class="form-group" action="/destroy/{{ $cart_in_item->id }}" id="form_{{ $cart_in_item->id }}" method="post">
             {{ csrf_field() }}
             {{ method_field('delete') }}
             <button data-id="{{$cart_in_item->id}}" class="btn btn-danger" type="submit" onclick="delete(this);">削除</button>
           </form>
         </div>
         <div class="col-3">
-          <h3>¥<span class="itemPrice">{{$cart_in_item->price}}</span></h3>
+          <h3>¥<span class="itemPrice">{{ number_format($cart_in_item->price) }}</span></h3>
         </div>
         <div class="col-2">
           <select class="form-control" name="number">
             @for($i = 0; $i < $cart_in_item->stock_number; $i++)
               @if($i + 1 == $cart_in_item->pivot->quantity)
-                <option value="{{$i + 1}}" selected="selected">{{$i + 1}}</option>
+                <option value="{{ $i + 1 }}" selected="selected">{{ $i + 1 }}</option>
               @else
-                <option value="{{$i + 1}}">{{$i + 1}}</option>
+                <option value="{{ $i + 1 }}">{{ $i + 1 }}</option>
               @endif
             @endfor
           </select>
@@ -87,12 +87,12 @@
     $totalPrice = 0;
     $('#cartItems').find('.cartItem').each(function() {
       $quantity = parseInt($(this).find('select').val());
-      $price = parseInt($(this).find('.itemPrice').text());
+      $price = parseInt($(this).find('.itemPrice').text().split(',').join(''));
       $totalQuantity += $quantity;
       $totalPrice += $quantity * $price;
     });
     $('.totalQuantity').text($totalQuantity);
-    $('.totalPrice').text($totalPrice);
+    $('.totalPrice').text(new Intl.NumberFormat('ja-JP').format($totalPrice));
     $('input[name="totalQuantity"]').val($totalQuantity);
     $('input[name="totalPrice"]').val($totalPrice);
   });

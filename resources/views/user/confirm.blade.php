@@ -27,13 +27,13 @@
                       <form class="form-group" method="post" action="/select_address">
                         {{ csrf_field() }}
                         <ul>
-                          <li class="mb-1"><strong>{{$address->name}}</strong></li>
-                          <li>〒{{$address->postal_code}}</li>
-                          <li>{{$address->state}} {{$address->city}}{{$address->street}}</li>
-                          <li>{{$address->building}}</li>
-                          <li>電話番号: {{$address->tel}}</li>
+                          <li class="mb-1"><strong>{{ $address->name }}</strong></li>
+                          <li>〒{{ $address->postal_code }}</li>
+                          <li>{{ $address->state }} {{ $address->city }}{{ $address->street }}</li>
+                          <li>{{ $address->building }}</li>
+                          <li>電話番号: {{ $address->tel }}</li>
                         </ul>
-                        <input type="hidden" name="id" value="{{$address->id}}">
+                        <input type="hidden" name="id" value="{{ $address->id }}">
                         <button class="btn btn-primary mt-3 select_address" type="submit" name="button">この住所を使う</button>
                       </form>
                     </div>
@@ -90,12 +90,12 @@
       {{--確認画面でのお届け先住所--}}
       <div class="address-body">
         <ul>
-          <li>{{$selected_address->name}}</li>
-          <li>{{$selected_address->postal_code}}</li>
-          <li>{{$selected_address->state}} {{$selected_address->city}}{{$selected_address->street}}</li>
-          <li>{{$selected_address->building}}</li>
-          <li>電話番号: {{$selected_address->tel}}</li>
-          <li><input type="hidden" name="delivery_id" value="{{$selected_address->id}}"></li>
+          <li>{{ $selected_address->name }}</li>
+          <li>{{ $selected_address->postal_code }}</li>
+          <li>{{ $selected_address->state }} {{ $selected_address->city }}{{ $selected_address->street }}</li>
+          <li>{{ $selected_address->building }}</li>
+          <li>電話番号: {{$selected_address->tel }}</li>
+          <li><input type="hidden" name="delivery_id" value="{{ $selected_address->id }}"></li>
         </ul>
       </div>
     </div>
@@ -106,7 +106,7 @@
         <strong>配送希望日</strong><br>
       </div>
         <div class="deliver-body form-group{{ $errors->has('delivery_date') ? 'has-error' : '' }}">
-          <input type="text" name="delivery_date" id="datepicker" value="{{old('delivery_date')}}" required autocomplete="off">
+          <input type="text" name="delivery_date" id="datepicker" value="{{ old('delivery_date') }}" required autocomplete="off">
           @if($errors->has('delivery_date'))
             <span class="form-text text-danger">
               <strong>{{ $errors->first('delivery_date') }}</strong>
@@ -141,11 +141,11 @@
         <table class="table table-bordered">
           <tr>
             <th>商品数</th>
-            <td>{{$totalQuantity}}点</td>
+            <td>{{ $totalQuantity }}点</td>
           </tr>
           <tr>
             <th>小計</th>
-            <td>¥{{$totalPrice}}</td>
+            <td>¥{{ number_format($totalPrice) }}</td>
           </tr>
         </table>
       </div>

@@ -8,21 +8,21 @@
   <div class="row">
     <div class="col-3">
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{$item->image_url}}" alt="Card image cap">
+        <img class="card-img-top" src="{{ $item->image_url }}" alt="Card image cap">
       </div>
     </div>
     <div class="col-4 offset-1">
-      <h3 class="mb-3 pt-3">{{$item->name}}</h3>
-      <p>カテゴリ：{{$item_category_name}}</p>
-      <p>原産国：{{$item->country}}</p>
-      <p>商品説明：<br>{{$item->description}}</p>
+      <h3 class="mb-3 pt-3">{{ $item->name }}</h3>
+      <p>カテゴリ：{{ $item_category_name }}</p>
+      <p>原産国：{{ $item->country }}</p>
+      <p>商品説明：<br>{{ $item->description }}</p>
     </div>
     <div class="col-3 offset-1 pt-3">
-      <h3 class="mb-5">¥{{$item->price}}</h3>
+      <h3 class="mb-5">¥{{ number_format($item->price) }}</h3>
       <form class="form-group" action="/cart" method="post">
         {{ csrf_field() }}
-        <input type="hidden" name="user_id" value="{{$user_id}}">
-        <input type="hidden" name="item_id" value="{{$item->id}}">
+        <input type="hidden" name="user_id" value="{{ $user_id }}">
+        <input type="hidden" name="item_id" value="{{ $item->id }}">
         <button class="btn btn-primary" type="submit">カートに追加</button>
       </form>
     </div>

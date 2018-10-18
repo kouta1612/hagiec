@@ -30,7 +30,7 @@ class AdminUserOrderController extends Controller
         foreach ($order_details as $order_detail) {
             $total_price += $order_detail->price * $order_detail->number;
         }
-        return $total_price;
+        return number_format($total_price);
     }
 
 }

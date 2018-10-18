@@ -11,8 +11,8 @@
         {{ csrf_field() }}
         @foreach($categories as $category)
           <p>
-            <label for="{{$loop->index}}">
-              <input id="{{$loop->index}}" type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" @if(is_array($category_ids) && in_array($category->id, $category_ids)) checked @endif>{{$category->name}}
+            <label for="{{ $loop->index }}">
+              <input id="{{ $loop->index }}" type="checkbox" name="category[]" value="{{$category->id}}" class="mr-1" @if(is_array($category_ids) && in_array($category->id, $category_ids)) checked @endif>{{ $category->name }}
             </label>
           </p>
         @endforeach
@@ -28,13 +28,13 @@
           <div class="card top_card">
             <img class="card-img-top item_image contain" src="{{$item->image_url}}" alt="Card image cap">
             <div class="card-body text-center">
-              <h5 class="card-title">{{$item->name}}</h5>
-              <p class="card-text">¥{{$item->price}}</p>
+              <h5 class="card-title">{{ $item->name }}</h5>
+              <p class="card-text">¥{{ number_format($item->price) }}</p>
               <form class="form-group" action="/cart" method="post">
                 {{ csrf_field() }}
-                <input type="hidden" name="user_id" value="{{$user_id}}">
-                <input type="hidden" name="item_id" value="{{$item->id}}">
-                <a href="/detail/{{$item->id}}" class="btn btn-primary">詳細</a>
+                <input type="hidden" name="user_id" value="{{ $user_id }}">
+                <input type="hidden" name="item_id" value="{{ $item->id }}">
+                <a href="/detail/{{ $item->id }}" class="btn btn-primary">詳細</a>
                 <button class="btn btn-primary" type="submit">カートに追加</button>
               </form>
             </div>

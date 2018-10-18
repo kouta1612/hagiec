@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col text-center my-5">
-            <h3>ユーザ情報</h3>
+            <h3>ユーザ一覧</h3>
         </div>
     </div>
     <div class="row">
@@ -61,7 +61,7 @@
             <form action="/admin/user/download" method="post" id = "form" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="text-center mt-5">
-                    <button class="btn btn-primary" data-action="/admin/user/download" data-method="post">CSV形式でダウンロード</button>
+                    <button class="btn btn-primary" data-action="/admin/user/download" data-method="post">ダウンロード</button>
                 </div>
             </form>
         </div>

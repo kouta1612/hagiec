@@ -43,9 +43,9 @@
                         <tr>
                             <td>{{ $order_detail->id }}</td>
                             <td>{{ $order_detail->name }}</td>
-                            <td>{{ $order_detail->price }}</td>
+                            <td>¥{{ number_format($order_detail->price) }}</td>
                             <td>{{ $order_detail->number }}</td>
-                            <td>{{ $order_detail->total_price }}</td>
+                            <td>¥{{ number_format($order_detail->total_price) }}</td>
                         </tr>
                     @endforeach 
                 </tbody>
